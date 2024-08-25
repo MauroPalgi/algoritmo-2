@@ -10,20 +10,21 @@ public class Practico {
     Ejemplos:
 
     Ejercicio 3: Listas
-    A.Realizar una implementación del TAD lista.
+    A.Realizar una implementación del TAD lista. - ✅
 
     B.Implemente recursivamente una función que inserte (en una lista dinámica) un
-    elemento al final. public void insertarFinal(int n);
+    elemento al final. public void insertarFinalRecursiva(int n); - ❌
 
     C.Implemente de forma recursiva una función que devuelva true si y solo si la lista
     está ordenada de menor a mayor.
-    public boolean estaOrdenada();
+    public boolean estaOrdenada(); - ❌
 
 
     Ejercicio 4: Pilas
-    A. Realizar dos implementaciones del TAD pila, una estática y otra dinámica.
+    A. Realizar dos implementaciones del TAD pila, una estática y otra dinámica. - ❌ Averiguar como son las estaticas de las dinamicas
+
     B.Implemente una función que permita evaluar si una determinada cadena de
-    caracteres está sintácticamente correcta considerando el balanceo de paréntesis. (),
+    caracteres está sintácticamente correcta considerando el balanceo de paréntesis. (), - ❌
     {}, [].
 
 
@@ -47,4 +48,7 @@ public class Practico {
 
         return suma;
     }
+
+
+
 }

@@ -22,12 +22,12 @@ public class ListaDoble<T extends Comparable<T>> {
         this.fin = fin;
     }
 
-    
+
     public boolean esVacia() { // GOOD
         return this.cantidad == 0;
     }
 
-    
+
     public void agregarInicio(T data) { // GOOD
         NodoDoble<T> nodo = new NodoDoble<>(data);
         if (esVacia()) {
@@ -41,7 +41,7 @@ public class ListaDoble<T extends Comparable<T>> {
         cantidad++;
     }
 
-    
+
     public void agregarFinal(T data) { // GOOD
         NodoDoble<T> nodo = new NodoDoble<>(data);
         if (this.esVacia()) {
@@ -56,7 +56,7 @@ public class ListaDoble<T extends Comparable<T>> {
         cantidad++;
     }
 
-    
+
     public void agregarOrd(T data) { // TODO UTILIZAR https://www.geeksforgeeks.org/insertion-sort-doubly-linked-list/
         NodoDoble<T> nodo = new NodoDoble<>(data);
         if (!esVacia()) {
@@ -97,7 +97,7 @@ public class ListaDoble<T extends Comparable<T>> {
 
     }
 
-    
+
     public void borrarInicio() { // GOOD
         if (!this.esVacia()) {
             if (cantidad == 1) {
@@ -116,7 +116,7 @@ public class ListaDoble<T extends Comparable<T>> {
         }
     }
 
-    
+
     public void borrarFin() { // GOOD
         if (!this.esVacia()) {
             if (cantidad == 1) {
@@ -132,7 +132,7 @@ public class ListaDoble<T extends Comparable<T>> {
         }
     }
 
-    
+
     public void borrarElemento(T data) { // GOOD
         if (!this.esVacia()) {
             NodoDoble<T> actual = getInicio();
@@ -165,7 +165,7 @@ public class ListaDoble<T extends Comparable<T>> {
 
     }
 
-    
+
     public String toString() {
         String text = "";
         NodoDoble<T> actual = getInicio();
@@ -182,7 +182,7 @@ public class ListaDoble<T extends Comparable<T>> {
         return text;
     }
 
-    
+
     public boolean buscarElemento(T data) { // GOOD
         boolean econtrado = false;
         if (!this.esVacia()) {
@@ -198,7 +198,7 @@ public class ListaDoble<T extends Comparable<T>> {
         return econtrado;
     }
 
-    
+
     public NodoDoble obtenerElemento(T data) { // GOOD
         NodoDoble<T> nodo = null;
         if (!this.esVacia()) {
@@ -214,14 +214,14 @@ public class ListaDoble<T extends Comparable<T>> {
         return nodo;
     }
 
-    
+
     public void vaciar() { // GOOD
         this.inicio = null;
         this.fin = null;
         this.cantidad = 0;
     }
 
-    
+
     public void mostrar() { // GOOD
         NodoDoble<T> actual = getInicio();
         if (actual != null) {
@@ -237,7 +237,7 @@ public class ListaDoble<T extends Comparable<T>> {
     }
 
     // el nodo recibido tiene que ser el inicio
-    
+
     public void mostrarREC(NodoDoble nodo) { // GOOD
         if (esVacia()) { // es lo mismo que preguntar nodo == null
             System.out.print("La Lista esta vacia");
@@ -254,9 +254,18 @@ public class ListaDoble<T extends Comparable<T>> {
         mostrarREC(nodo.getSiguiente());
     }
 
-    
+
     public int cantElementos() { // GOOD
         return this.cantidad;
+    }
+
+    public void insertarFinalRecursiva(T n) {
+        if (this.esVacia()) {
+            NodoDoble<T> actual = new NodoDoble<T>(n);
+            this.setInicio(actual);
+            this.setFin(actual);
+        }
+
     }
 
 }

@@ -31,7 +31,7 @@ public class Practico {
     Ejercicio 5: Colas
     Realizar una implementación del TAD cola.
     */
-    public int sumaVectorIterativo(int[] vector){
+    static public int sumaVectorIterativo(int[] vector) {
         int suma = 0;
         for (int i = 0; i < vector.length; i++) {
             suma += vector[i];
@@ -40,15 +40,16 @@ public class Practico {
         return suma;
     }
 
-    public int sumaVectorRecursiva(int[] vector){
-        int suma = 0;
-        for (int i = 0; i < vector.length; i++) {
-            suma += vector[i];
+    static public int sumaVectorRecursiva(int[] datos, int desde, int hasta) {
+
+        if (desde == hasta) {
+            return datos[desde];
         }
-
-        return suma;
+        int medio = (desde + hasta) / 2;
+        int sumaIzq = sumaVectorRecursiva(datos, desde, medio);
+        int sumaDer = sumaVectorRecursiva(datos, medio + 1, hasta);
+        return sumaIzq + sumaDer;
     }
-
 
 
 }

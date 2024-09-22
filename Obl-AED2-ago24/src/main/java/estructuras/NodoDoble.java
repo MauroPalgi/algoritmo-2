@@ -1,4 +1,4 @@
-package Estructuras;
+package estructuras;
 
 public class NodoDoble<T extends Comparable<T>> {
 

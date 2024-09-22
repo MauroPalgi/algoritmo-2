@@ -1,13 +1,25 @@
 package sistema;
 
+import dominio.Sucursal;
+import estructuras.ListaDoble;
 import interfaz.*;
 
 public class ImplementacionSistema implements Sistema {
 
 
+    private static final int MAX_SUCURSALES = 3;
+
+    private ListaDoble<Sucursal> listaSucursales; // estructura temporal hasta poder implementar graphs
+    private int numSucursalesActuales;
+
     @Override
     public Retorno inicializarSistema(int maxSucursales) {
-        return Retorno.noImplementada();
+        if (maxSucursales <= MAX_SUCURSALES || maxSucursales <= 0) {
+            return Retorno.error1("NO SE PUEDO ESTAGBLECER EL MAXIMO DE SUCURSALES :" + maxSucursales + " , MAXIMO DE SUCURSALES :" + this.MAX_SUCURSALES);
+        } else {
+            numSucursalesActuales = maxSucursales;
+            return Retorno.ok();
+        }
     }
 
     @Override

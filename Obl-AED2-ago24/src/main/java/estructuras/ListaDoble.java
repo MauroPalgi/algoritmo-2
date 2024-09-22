@@ -1,4 +1,4 @@
-package Estructuras;
+package estructuras;
 
 public class ListaDoble<T extends Comparable<T>> {
 

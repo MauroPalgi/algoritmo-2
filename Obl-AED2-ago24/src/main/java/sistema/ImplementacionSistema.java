@@ -2,6 +2,8 @@ package sistema;
 
 import dominio.Sucursal;
 import dominio.Jugador;
+import dominio.Equipo;
+import estructuras.ABBEquipo;
 import estructuras.ABBJugador;
 import estructuras.ListaDoble;
 import estructuras.NodoABB;
@@ -18,6 +20,9 @@ public class ImplementacionSistema implements Sistema {
 
     // JUGADOR
     private ABBJugador abbJugadores;
+
+    // EQUIPO
+    private ABBEquipo abbEquipos;
 
     @Override
     public Retorno inicializarSistema(int maxSucursales) {
@@ -56,17 +61,59 @@ public class ImplementacionSistema implements Sistema {
 
     @Override
     public Retorno listarJugadoresAscendente() {
-        return Retorno.noImplementada();
+        String result = inOrden(abbJugadores.getRaiz());
+        if (result.isEmpty()) {
+            return Retorno.ok();
+        }
+
+        return Retorno.ok(result.substring(0, result.length() - 1));
     }
+
+    public String inOrden(NodoABB nodo) {
+        if (nodo == null) {
+            return "";
+        }
+        String left = inOrden(nodo.getIzq());
+        String current = nodo.getDato().toString() + "|";
+        String right = inOrden(nodo.getDer());
+        return left + current + right;
+    }
+
 
     @Override
     public Retorno listarJugadoresPorCategoria(Categoria unaCategoria) {
-        return Retorno.noImplementada();
+        String result = inOrdenFiltrado(abbJugadores.getRaiz(), unaCategoria);
+        if (result.isEmpty()) {
+            return Retorno.ok();
+        }
+        // Remove the last "|" character from the result string, if it exists
+        return Retorno.ok(result.substring(0, Math.max(0, result.length() - 1)));
+    }
+
+    public String inOrdenFiltrado(NodoABB<Jugador> nodo, Categoria categoria) {
+        if (nodo == null) {
+            return "";
+        }
+        String left = inOrdenFiltrado(nodo.getIzq(), categoria);
+        String current = "";
+        if (nodo.getDato().getCategoria().equals(categoria)) {
+            current = nodo.getDato().toString() + "|";
+        }
+        String right = inOrdenFiltrado(nodo.getDer(), categoria);
+        return left + current + right;
     }
 
     @Override
     public Retorno registrarEquipo(String nombre, String manager) {
-        return Retorno.noImplementada();
+        if (nombre == null || nombre.isEmpty() || manager == null || manager.isEmpty()) {
+            return Retorno.error1("Nombre o manager no pueden ser nulos o vacíos.");
+        }
+        if (abbEquipos.pertenece(new Equipo(nombre, manager))) {
+            return Retorno.error2("Ya existe un equipo con ese nombre.");
+        }
+        Equipo nuevoEquipo = new Equipo(nombre, manager);
+        abbEquipos.insertar(nuevoEquipo);
+        return Retorno.ok();
     }
 
     @Override

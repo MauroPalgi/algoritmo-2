@@ -5,6 +5,10 @@ public class ABB<T extends Comparable<T>> {
 
     private NodoABB<T> raiz;
 
+    public NodoABB<T> getRaiz() {
+        return raiz;
+    }
+
     /**
      * Práctico 1 - Ejercicio 5 - Parte A
      * Inserta el dato pasado como parámetro en el árbol manteniéndolo ordenado.

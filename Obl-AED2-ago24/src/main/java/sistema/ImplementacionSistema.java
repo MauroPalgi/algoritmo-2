@@ -1,16 +1,23 @@
 package sistema;
 
 import dominio.Sucursal;
+import dominio.Jugador;
+import estructuras.ABBJugador;
 import estructuras.ListaDoble;
+import estructuras.NodoABB;
 import interfaz.*;
+import utils.UTILS;
 
 public class ImplementacionSistema implements Sistema {
 
 
     private static final int MAX_SUCURSALES = 3;
-
+    // SUCURSAL
     private ListaDoble<Sucursal> listaSucursales; // estructura temporal hasta poder implementar graphs
     private int numSucursalesActuales;
+
+    // JUGADOR
+    private ABBJugador abbJugadores;
 
     @Override
     public Retorno inicializarSistema(int maxSucursales) {
@@ -24,12 +31,27 @@ public class ImplementacionSistema implements Sistema {
 
     @Override
     public Retorno registrarJugador(String alias, String nombre, String apellido, Categoria categoria) {
-        return Retorno.noImplementada();
+        if (UTILS.validarStringParametros(alias, nombre, apellido, categoria.getTexto())) {
+            return Retorno.error1("ALGUN PARAMETRO ES NULL O VACIO");
+        }
+        if (abbJugadores.pertenece(new Jugador(alias))) {
+            return Retorno.error2("EL JUGADOR CON ALIAS " + alias + ", YA EXISTE");
+        }
+        Jugador nuevoJugador = new Jugador(alias, nombre, apellido, categoria);
+        abbJugadores.insertar(nuevoJugador);
+        return Retorno.ok("JUGADOR INSERTADO EXITOSAMENTE");
     }
 
     @Override
     public Retorno buscarJugador(String alias) {
-        return Retorno.noImplementada();
+        if (UTILS.validarStringParametros(alias)) {
+            return Retorno.error1("ALIAS ES NULL O VACIO");
+        }
+        Jugador jugadorBuscado = abbJugadores.buscar(new Jugador(alias));
+        if (jugadorBuscado == null) {
+            return Retorno.error2("NO EXISTE JUGADOR CON ALIAS" + alias);
+        }
+        return Retorno.ok(0, jugadorBuscado.toString());
     }
 
     @Override

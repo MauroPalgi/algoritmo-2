@@ -1,5 +1,7 @@
 package dominio;
 
+import interfaz.Categoria;
+
 public class Jugador {
     private String alias;
     private String nombre;

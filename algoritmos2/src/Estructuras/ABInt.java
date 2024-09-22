@@ -1,13 +1,13 @@
 package Estructuras;
 
-public class AB {
+public class ABInt {
     private NodoAB<Integer> raiz;
 
-    public AB(NodoAB<Integer> raiz) {
+    public ABInt(NodoAB<Integer> raiz) {
         this.raiz = raiz;
     }
 
-    public AB() {
+    public ABInt() {
     }
 
     public void setRaiz(NodoAB<Integer> raiz) {

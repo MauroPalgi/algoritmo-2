@@ -1,6 +1,6 @@
 package Estructuras;
 
-public class NodoAB<T extends Comparable<T>> {
+public class NodoAB<T> {
 
     private T dato;
     private NodoAB<T> izq;

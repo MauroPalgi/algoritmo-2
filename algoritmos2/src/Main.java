@@ -1,6 +1,5 @@
-import Estructuras.AB;
+import Estructuras.ABInt;
 import Estructuras.NodoAB;
-import Practicos.Practico;
 
 public class Main {
     public static void main(String[] args) {
@@ -14,9 +13,9 @@ public class Main {
         NodoAB<Integer> nodoInt8 = new NodoAB<Integer>(8, nodoInt4, nodoInt7);
         NodoAB<Integer> nodoInt1 = new NodoAB<Integer>(1, nodoInt20, nodoInt8);
 
-        AB ab = new AB(nodoInt1);
-        System.out.println(ab.cantNodos());
-        System.out.println(ab.cantHojas());
+        ABInt abInt = new ABInt(nodoInt1);
+        System.out.println(abInt.cantNodos());
+        System.out.println(abInt.cantHojas());
 
     }
 

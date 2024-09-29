@@ -1,12 +1,24 @@
 package dominio;
 
+import estructuras.ABBJugador;
+
 public class Equipo implements Comparable<Equipo> {
     private String nombre;
     private String manager;
 
+    public ABBJugador getAbbIntegrantes() {
+        return abbIntegrantes;
+    }
+
+    private ABBJugador abbIntegrantes = new ABBJugador();
+
     public Equipo(String nombre, String manager) {
         this.nombre = nombre;
         this.manager = manager;
+    }
+
+    public Equipo(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getNombre() {
@@ -38,5 +50,10 @@ public class Equipo implements Comparable<Equipo> {
     @Override
     public String toString() {
         return nombre + ";" + manager;
+    }
+
+
+    public Jugador buscarJugador(String alias){
+        return abbIntegrantes.buscar(new Jugador(alias));
     }
 }

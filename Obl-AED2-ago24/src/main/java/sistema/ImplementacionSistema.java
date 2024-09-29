@@ -118,7 +118,28 @@ public class ImplementacionSistema implements Sistema {
 
     @Override
     public Retorno agregarJugadorAEquipo(String nombreEquipo, String aliasJugador) {
-        return Retorno.noImplementada();
+        if (UTILS.validarStringParametros(nombreEquipo, aliasJugador)) {
+            return Retorno.error1("ALGUN PARAMETRO ES NULL O VACIO");
+        }
+        Equipo equipoEncontrado = abbEquipos.buscar(new Equipo(nombreEquipo));
+        if (equipoEncontrado == null) {
+            return Retorno.error2("NO EXISTE EQUIPO CON NOMBRE " + nombreEquipo);
+        }
+        Jugador jugadorEncontrado = abbJugadores.buscar(new Jugador(aliasJugador));
+        if (jugadorEncontrado == null) {
+            return Retorno.error3("NO EXISTE JUGADOR CON ALIAS " + aliasJugador);
+        }
+        if (equipoEncontrado.getAbbIntegrantes().cantElementos() == 5){
+            return Retorno.error4("EL EQUIPO " + nombreEquipo + " YA TIENE 5 INTEGRANTES");
+        }
+        Jugador jugadorEnEquipo = abbEquipos.buscarJugadorEnEquipos(aliasJugador);
+        if (jugadorEnEquipo != null){
+            return Retorno.error6("EL JUGADOR : " + aliasJugador + " AL EQUIPO : " + jugadorEnEquipo.getNombreEquipo());
+        }
+        equipoEncontrado.getAbbIntegrantes().insertar(jugadorEncontrado);
+        jugadorEncontrado.setNombreEquipo(equipoEncontrado.getNombre());
+        return Retorno.ok();
+        
     }
 
     @Override

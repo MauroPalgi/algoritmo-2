@@ -7,10 +7,13 @@ public class Jugador implements Comparable<Jugador> {
     private String nombre;
     private String apellido;
     private Categoria categoria;
+    private String nombreEquipo;
 
     public Jugador(String alias) {
         this.alias = alias;
     }
+
+
 
     public Jugador(String alias, String nombre, String apellido, Categoria categoria) {
         this.alias = alias;
@@ -49,6 +52,14 @@ public class Jugador implements Comparable<Jugador> {
 
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
+    }
+
+    public String getNombreEquipo() {
+        return nombreEquipo;
+    }
+
+    public void setNombreEquipo(String nombreEquipo) {
+        this.nombreEquipo = nombreEquipo;
     }
 
     @Override

@@ -116,5 +116,14 @@ public class ABB<T extends Comparable<T>> {
         return "";
     }
 
+    public int cantElementos(){
+        return cantElementos(this.raiz);
+    }
 
+    private int cantElementos(NodoABB<T> nodo) {
+        if (nodo == null){
+            return 0;
+        }
+        return 1 + cantElementos(nodo.getDer()) + cantElementos(nodo.getIzq());
+    }
 }

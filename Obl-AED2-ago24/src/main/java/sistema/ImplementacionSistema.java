@@ -139,12 +139,26 @@ public class ImplementacionSistema implements Sistema {
         equipoEncontrado.getAbbIntegrantes().insertar(jugadorEncontrado);
         jugadorEncontrado.setNombreEquipo(equipoEncontrado.getNombre());
         return Retorno.ok();
-        
+
     }
 
     @Override
     public Retorno listarJugadoresDeEquipo(String nombreEquipo) {
-        return Retorno.noImplementada();
+        if (UTILS.validarStringParametros(nombreEquipo)) {
+            return Retorno.error1("NOMBRE DE QUIPO ES NULL O VACIO");
+        }
+        Equipo equipoBuscado = abbEquipos.buscar(new Equipo(nombreEquipo));
+        if(equipoBuscado == null) {
+            return Retorno.error2("NO EXISTE EQUIPO CON ESE NOMBRE");
+
+        }
+
+        String result = inOrden(equipoBuscado.getAbbIntegrantes().getRaiz());
+        if (result.isEmpty()) {
+            return Retorno.ok();
+        }
+
+        return Retorno.ok(result.substring(0, result.length() - 1));
     }
 
     @Override

@@ -3,10 +3,7 @@ package sistema;
 import dominio.Sucursal;
 import dominio.Jugador;
 import dominio.Equipo;
-import estructuras.ABBEquipo;
-import estructuras.ABBJugador;
-import estructuras.ListaDoble;
-import estructuras.NodoABB;
+import estructuras.*;
 import interfaz.*;
 import utils.UTILS;
 
@@ -19,7 +16,12 @@ public class ImplementacionSistema implements Sistema {
     private int numSucursalesActuales;
 
     // JUGADOR
-    private ABBJugador abbJugadores;
+
+    private ABB<Jugador> abbJugadores;
+    private ABB<Jugador>  abbJugadoresEstandares;
+    private ABB<Jugador>  abbJugadoresPrincipiantes;
+    private ABB<Jugador>  abbJugadoresProfesionales;
+
 
     // EQUIPO
     private ABBEquipo abbEquipos;
@@ -44,6 +46,15 @@ public class ImplementacionSistema implements Sistema {
         }
         Jugador nuevoJugador = new Jugador(alias, nombre, apellido, categoria);
         abbJugadores.insertar(nuevoJugador);
+        if (categoria == Categoria.ESTANDARD){
+            abbJugadoresEstandares.insertar(nuevoJugador);
+        }
+        if (categoria == Categoria.PRINCIPIANTE){
+            abbJugadoresPrincipiantes.insertar(nuevoJugador);
+        }
+        if (categoria == Categoria.PROFESIONAL){
+            abbJugadoresProfesionales.insertar(nuevoJugador);
+        }
         return Retorno.ok("JUGADOR INSERTADO EXITOSAMENTE");
     }
 
@@ -65,7 +76,6 @@ public class ImplementacionSistema implements Sistema {
         if (result.isEmpty()) {
             return Retorno.ok();
         }
-
         return Retorno.ok(result.substring(0, result.length() - 1));
     }
 
@@ -82,7 +92,15 @@ public class ImplementacionSistema implements Sistema {
 
     @Override
     public Retorno listarJugadoresPorCategoria(Categoria unaCategoria) {
-        String result = inOrdenFiltrado(abbJugadores.getRaiz(), unaCategoria);
+        NodoABB raiz = abbJugadoresEstandares.getRaiz();
+        if (unaCategoria == Categoria.PRINCIPIANTE){
+            raiz = abbJugadoresPrincipiantes.getRaiz();
+        }
+        if (unaCategoria == Categoria.PROFESIONAL){
+            raiz = abbJugadoresProfesionales.getRaiz();
+        }
+
+        String result = inOrden(raiz);
         if (result.isEmpty()) {
             return Retorno.ok();
         }

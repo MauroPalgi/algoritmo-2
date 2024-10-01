@@ -181,8 +181,23 @@ public class ImplementacionSistema implements Sistema {
 
     @Override
     public Retorno listarEquiposDescendente() {
-        return Retorno.noImplementada();
+        String result = listarEquiposDescendente(abbEquipos.getRaiz());
+        if (result.isEmpty()) {
+            return Retorno.ok();
+        }
+        return Retorno.ok(result.substring(0, result.length() - 1));
     }
+
+    private String listarEquiposDescendente(NodoABB<Equipo> nodo) {
+        if (nodo == null) {
+            return "";
+        }
+        String right = listarEquiposDescendente(nodo.getDer());
+        String current = nodo.getDato().getNombre() + ";" + nodo.getDato().getManager() + ";" + nodo.getDato().getAbbIntegrantes().cantElementos() + "|";
+        String left = listarEquiposDescendente(nodo.getIzq());
+        return right + current + left;
+    }
+
 
     @Override
     public Retorno registrarSucursal(String codigo, String nombre) {

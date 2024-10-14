@@ -17,14 +17,14 @@ public class ImplementacionSistema implements Sistema {
 
     // JUGADOR
 
-    private ABB<Jugador> abbJugadores;
-    private ABB<Jugador>  abbJugadoresEstandares;
-    private ABB<Jugador>  abbJugadoresPrincipiantes;
-    private ABB<Jugador>  abbJugadoresProfesionales;
+    private ABB<Jugador> abbJugadores = new ABB<>();
+    private ABB<Jugador>  abbJugadoresEstandares = new ABB<>();
+    private ABB<Jugador>  abbJugadoresPrincipiantes = new ABB<>();
+    private ABB<Jugador>  abbJugadoresProfesionales = new ABB<>();;
 
 
     // EQUIPO
-    private ABBEquipo abbEquipos;
+    private ABBEquipo abbEquipos = new ABBEquipo();
 
     @Override
     public Retorno inicializarSistema(int maxSucursales) {
@@ -38,7 +38,11 @@ public class ImplementacionSistema implements Sistema {
 
     @Override
     public Retorno registrarJugador(String alias, String nombre, String apellido, Categoria categoria) {
-        if (UTILS.validarStringParametros(alias, nombre, apellido, categoria.getTexto())) {
+        System.out.println(alias);
+        if (alias == null || alias.isEmpty() ||
+                nombre == null || nombre.isEmpty() ||
+                apellido == null || apellido.isEmpty() ||
+                categoria == null) {
             return Retorno.error1("ALGUN PARAMETRO ES NULL O VACIO");
         }
         if (abbJugadores.pertenece(new Jugador(alias))) {

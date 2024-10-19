@@ -79,7 +79,7 @@ public class ImplementacionSistema implements Sistema {
     public Retorno listarJugadoresAscendente() {
         String result = inOrden(abbJugadores.getRaiz());
         if (result.isEmpty()) {
-            return Retorno.ok();
+            return Retorno.ok("");
         }
         return Retorno.ok(result.substring(0, result.length() - 1));
     }
@@ -141,7 +141,7 @@ public class ImplementacionSistema implements Sistema {
 
     @Override
     public Retorno agregarJugadorAEquipo(String nombreEquipo, String aliasJugador) {
-        if (UTILS.validarStringParametros(nombreEquipo, aliasJugador)) {
+        if (UTILS.esStringVacioONull(nombreEquipo)|| UTILS.esStringVacioONull(aliasJugador)) {
             return Retorno.error1("ALGUN PARAMETRO ES NULL O VACIO");
         }
         Equipo equipoEncontrado = abbEquipos.buscar(new Equipo(nombreEquipo));

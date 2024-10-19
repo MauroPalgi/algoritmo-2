@@ -29,11 +29,11 @@ public class Test04_ListarJugadorTest {
         // Caso: Listado con jugadores registrados
         retorno = sistema.listarJugadoresAscendente();
         assertEquals(Retorno.Resultado.OK, retorno.getResultado());
-        assertEquals("ana;Ana;Gomez;PROFESIONAL|carlos;Carlos;Lopez;PRINCIPIANTE|juan;Juan;Perez;ESTANDARD", retorno.getValorString());
+        assertEquals("ana;Ana;Gomez;Profesional|carlos;Carlos;Lopez;Principiante|juan;Juan;Perez;Estándar", retorno.getValorString());
     }
 
     @Test
-    void listarJugadoresAscendenteSinJugadores() { // TODO: ERRORES - Mauro
+    void listarJugadoresAscendenteSinJugadores() { // TODO: ERRORES - Mauro - Done
         // Inicializar sistema sin jugadores
         sistema = new ImplementacionSistema();
         sistema.inicializarSistema(10);

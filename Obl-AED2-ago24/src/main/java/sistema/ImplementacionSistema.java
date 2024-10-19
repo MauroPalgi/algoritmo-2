@@ -5,6 +5,7 @@ import dominio.Jugador;
 import dominio.Equipo;
 import estructuras.*;
 import interfaz.*;
+import utils.Resultado;
 import utils.UTILS;
 
 public class ImplementacionSistema implements Sistema {
@@ -39,9 +40,9 @@ public class ImplementacionSistema implements Sistema {
     @Override
     public Retorno registrarJugador(String alias, String nombre, String apellido, Categoria categoria) {
         System.out.println(alias);
-        if (alias == null || alias.isEmpty() ||
-                nombre == null || nombre.isEmpty() ||
-                apellido == null || apellido.isEmpty() ||
+        if (UTILS.esStringVacioONull(alias) ||
+            UTILS.esStringVacioONull(nombre) ||
+            UTILS.esStringVacioONull(apellido) ||
                 categoria == null) {
             return Retorno.error1("ALGUN PARAMETRO ES NULL O VACIO");
         }
@@ -64,14 +65,14 @@ public class ImplementacionSistema implements Sistema {
 
     @Override
     public Retorno buscarJugador(String alias) {
-        if (UTILS.validarStringParametros(alias)) {
+        if (UTILS.esStringVacioONull(alias)) {
             return Retorno.error1("ALIAS ES NULL O VACIO");
         }
-        Jugador jugadorBuscado = abbJugadores.buscar(new Jugador(alias));
-        if (jugadorBuscado == null) {
+        Resultado<Jugador> jugadorBuscado = abbJugadores.buscarConIteracion(new Jugador(alias));
+        if (jugadorBuscado.getDatoEncontrado() == null) {
             return Retorno.error2("NO EXISTE JUGADOR CON ALIAS" + alias);
         }
-        return Retorno.ok(0, jugadorBuscado.toString());
+        return Retorno.ok(jugadorBuscado.getIteraciones(), jugadorBuscado.getDatoEncontrado().toString());
     }
 
     @Override

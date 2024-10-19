@@ -64,7 +64,7 @@ public class Jugador implements Comparable<Jugador> {
 
     @Override
     public String toString() {
-        return alias + ";" + nombre + ";" + apellido + ";" + categoria.toString();
+        return alias + ";" + nombre + ";" + apellido  + (categoria != null ? ";" + categoria.getTexto() : "");
     }
 
     @Override

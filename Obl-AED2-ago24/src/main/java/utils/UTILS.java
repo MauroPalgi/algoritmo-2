@@ -7,7 +7,9 @@ public class UTILS {
 
     public static boolean validarStringParametros(String... parametros) {
         for (String parametro : parametros) {
-            if (!esStringVacioONull(parametro)) {
+            System.out.println(parametro);
+            System.out.println(esStringVacioONull(parametro));
+            if (parametro == null || parametro.isEmpty()) {
                 return false;
             }
         }

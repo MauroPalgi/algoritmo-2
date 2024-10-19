@@ -1,6 +1,8 @@
 package estructuras;
 
 
+import utils.Resultado;
+
 public class ABB<T extends Comparable<T>> {
 
     private NodoABB<T> raiz;
@@ -62,7 +64,8 @@ public class ABB<T extends Comparable<T>> {
 
     private T buscar(NodoABB<T> nodo, T dato) {
         if (nodo != null) {
-            if (nodo.getDato().equals(dato)) {
+        System.out.println(dato.toString());
+            if (nodo.getDato().compareTo(dato) == 0) {
                 return nodo.getDato();
             } else if (nodo.getDato().compareTo(dato) > 0) {
                 return buscar(nodo.getIzq(), dato);
@@ -71,6 +74,26 @@ public class ABB<T extends Comparable<T>> {
             }
         }
         return null;
+    }
+
+    public Resultado<T> buscarConIteracion(T dato) {
+        return buscarConIteracion(raiz, dato, 0);  // Inicializa las iteraciones en 0
+    }
+
+    private Resultado<T> buscarConIteracion(NodoABB<T> nodo, T dato, int iteraciones) {
+        if (nodo != null) {
+            iteraciones++;  // Cada vez que se hace una comparación, aumentamos el contador
+            System.out.println("Iteración " + iteraciones + ": Buscando " + dato.toString());
+
+            if (nodo.getDato().compareTo(dato) == 0) {
+                return new Resultado<>(nodo.getDato(), iteraciones);  // Nodo encontrado
+            } else if (nodo.getDato().compareTo(dato) > 0) {
+                return buscarConIteracion(nodo.getIzq(), dato, iteraciones);  // Buscar en el subárbol izquierdo
+            } else {
+                return buscarConIteracion(nodo.getDer(), dato, iteraciones);  // Buscar en el subárbol derecho
+            }
+        }
+        return new Resultado<>(null, iteraciones);  // Si no se encuentra, devuelve null y las iteraciones
     }
 
     /**

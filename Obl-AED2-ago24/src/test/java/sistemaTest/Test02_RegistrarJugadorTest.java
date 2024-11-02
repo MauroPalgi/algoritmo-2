@@ -5,6 +5,8 @@ import interfaz.Retorno;
 import interfaz.Sistema;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import sistema.ImplementacionSistema;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class Test02_RegistrarJugadorTest {

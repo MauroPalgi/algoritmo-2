@@ -1,8 +1,9 @@
 package estructuras;
 
+
+
 import interfaz.ICola;
-import estructuras.ILista;
-import estructuras.Lista;
+import interfaz.ILista;
 
 public class Grafo {
     private final Vertice[] vertices;
@@ -116,38 +117,82 @@ public class Grafo {
         ICola<Integer> cola = new Cola<>();
         cola.encolar(posV);
         visitados[posV] = true;
-        while(!cola.estaVacia()){
+        while (!cola.estaVacia()) {
             int pos = cola.desencolar();
             System.out.print(vertices[pos] + " ");
             for (int i = 0; i < aristas.length; i++) {
-                if(aristas[pos][i].isExiste() && !visitados[i]){
-                    visitados[i]=true;
+                if (aristas[pos][i].isExiste() && !visitados[i]) {
+                    visitados[i] = true;
                     cola.encolar(i);
                 }
             }
         }
     }
 
-    public boolean esPuntoCritico(Vertice vert){
+    public boolean esPuntoCritico(Vertice vert) {
         /*
         - Obtener la posicion del vertice vert.
         - Ejecutar dfs (el metodo privado), pasando un array de visitados y la posicion de vert,
             luego me quedo con el array de visitados que pasamos por parámetro para comparar luego.
 
-        - Hacer una copia de la matriz de aristas y quitarle todas las aristas asociadas a vert.
-
         - Tengo que buscar el primer true del array de visitados anterior y me quedo con dicha posicion
-            para usar como vertice de inicio para el próximo dfs
-        - Ejecutar dfs, pero utilizando la copia de la matriz de aristas y me quedo con su array de visitados
+            para usar como vertice de inicio para el próximo dfs.
 
-        - Comparo el array de visitado de ambas ejecuciones de dfs teniendo en cuenta el no comparar la posicion
-            del vertice vert.
+        - Ejecutar nuevamente dfs, pero pasando un array de visitados en donde la posicion de vert tenga true.
 
-        - Si hay diferencias devuelvo true, ya que el vertice vert es un punto crítico.
+        - Comparo el array de visitado de ambas ejecuciones de dfs, si hay diferencias devuelvo true,
+            ya que el vertice vert es un punto crítico.
          */
 
         return false;
     }
+
+    public void dijkstra(Vertice vInicial) {
+        boolean[] visitados = new boolean[maxVertices];
+        int[] costos = new int[maxVertices];
+        int[] vengo = new int[maxVertices];
+
+        for (int i = 0; i < maxVertices; i++) {
+            costos[i] = Integer.MAX_VALUE;
+            vengo[i] = -1;
+            visitados[i] = false;
+        }
+
+        int posOrigen = obtenerPos(vInicial);
+
+        costos[posOrigen] = 0;
+
+        for (int i = 0; i < cantVertices; i++) {
+            int pos = obtenerSiguienteVerticeNoVisitadoDeMenorCosto(costos, visitados);
+
+            if (pos != -1) {
+                visitados[pos] = true;
+
+                for (int j = 0; j < maxVertices; j++) {
+                    if (aristas[pos][j].isExiste() && !visitados[j]) {
+                        int distanciaNueva = costos[pos] + aristas[pos][j].getPeso();
+                        if (costos[j] > distanciaNueva) {
+                            costos[j] = distanciaNueva;
+                            vengo[j] = pos;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private int obtenerSiguienteVerticeNoVisitadoDeMenorCosto(int[] costos, boolean[] visitados) {
+        int posMin = -1;
+        int min = Integer.MAX_VALUE;
+        for (int i = 0; i < maxVertices; i++) {
+            if (!visitados[i] && costos[i] < min) {
+                min = costos[i];
+                posMin = i;
+            }
+        }
+        return posMin;
+    }
+
 
     private int obtenerPos(Vertice vert) {
         for (int i = 0; i < vertices.length; i++) {

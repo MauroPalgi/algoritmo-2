@@ -2,7 +2,6 @@ package sistema;
 
 import interfaz.Categoria;
 import org.junit.jupiter.api.Test;
-import sistemaTest.ImplementacionSistema;
 
 public class Test02_RegistrarTest {
 

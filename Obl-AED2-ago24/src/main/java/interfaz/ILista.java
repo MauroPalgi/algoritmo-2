@@ -1,4 +1,4 @@
-package estructuras;
+package interfaz;
 
 import java.util.Iterator;
 

@@ -2,7 +2,6 @@ package sistema;
 
 import interfaz.Sistema;
 import org.junit.jupiter.api.Test;
-import sistemaTest.ImplementacionSistema;
 
 import static sistema.TestUtil.*;
 

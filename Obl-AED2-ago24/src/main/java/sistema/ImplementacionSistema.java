@@ -1,4 +1,4 @@
-package sistemaTest;
+package sistema;
 
 import dominio.Sucursal;
 import dominio.Jugador;

@@ -1,7 +1,6 @@
 package estructuras;
 
-import estructuras.ILista;
-import estructuras.Lista;
+import interfaz.ILista;
 
 public class GrafoSimple {
 

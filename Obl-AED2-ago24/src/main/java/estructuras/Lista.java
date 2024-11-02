@@ -1,5 +1,7 @@
 package estructuras;
 
+import interfaz.ILista;
+
 import java.util.Iterator;
 
 public class Lista<T> implements ILista<T> {

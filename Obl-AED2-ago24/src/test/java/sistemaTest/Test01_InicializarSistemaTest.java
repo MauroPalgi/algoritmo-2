@@ -3,6 +3,7 @@ package sistemaTest;
 import interfaz.Retorno;
 import interfaz.Sistema;
 import org.junit.jupiter.api.Test;
+import sistema.ImplementacionSistema;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

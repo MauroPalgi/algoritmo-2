@@ -231,6 +231,22 @@ public class Grafo {
         }
         return null;
     }
+    public boolean existeArista(Vertice origen, Vertice destino) {
+        int posOrigen = obtenerPos(origen);
+        int posDestino = obtenerPos(destino);
+
+        if (posOrigen == -1 || posDestino == -1) {
+            return false;
+        }
+
+        // aca es para ver si es en ambas direcciones
+        if (aristas[posOrigen][posDestino] != null) {
+            return true;
+        }
+        return !dirigido && aristas[posDestino][posOrigen] != null;
+    }
+
+
 
 
 }

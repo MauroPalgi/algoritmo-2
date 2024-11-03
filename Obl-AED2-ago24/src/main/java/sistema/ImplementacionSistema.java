@@ -230,6 +230,10 @@ public class ImplementacionSistema implements Sistema {
             return Retorno.error1("La latencia no puede ser negativa.");
         }
 
+        if (codigoSucursal1 == null || codigoSucursal1.isEmpty() || codigoSucursal2 == null || codigoSucursal2.isEmpty()) {
+            return Retorno.error2("Alguno de los parámetros de código de sucursal es vacío o null.");
+        }
+
         Vertice vertice1 = new Vertice(codigoSucursal1);
         Vertice vertice2 = new Vertice(codigoSucursal2);
 
@@ -238,6 +242,10 @@ public class ImplementacionSistema implements Sistema {
 
         if (posVertice1 == -1 || posVertice2 == -1) {
             return Retorno.error3("Alguna de las sucursales no existe.");
+        }
+
+        if (grafoRegiones.existeArista(grafoRegiones.obtenerVertice(posVertice1), grafoRegiones.obtenerVertice(posVertice2))) {
+            return Retorno.error4("Ya existe una conexión entre las dos sucursales.");
         }
 
         Arista nuevaArista = new Arista(latencia);

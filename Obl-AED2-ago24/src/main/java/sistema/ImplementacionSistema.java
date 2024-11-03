@@ -17,9 +17,10 @@ public class ImplementacionSistema implements Sistema {
 
     // JUGADOR
     private ABB<Jugador> abbJugadores = new ABB<>();
-    private ABB<Jugador>  abbJugadoresEstandares = new ABB<>();
-    private ABB<Jugador>  abbJugadoresPrincipiantes = new ABB<>();
-    private ABB<Jugador>  abbJugadoresProfesionales = new ABB<>();;
+    private ABB<Jugador> abbJugadoresEstandares = new ABB<>();
+    private ABB<Jugador> abbJugadoresPrincipiantes = new ABB<>();
+    private ABB<Jugador> abbJugadoresProfesionales = new ABB<>();
+    ;
 
 
     // EQUIPO
@@ -30,10 +31,8 @@ public class ImplementacionSistema implements Sistema {
         if (maxSucursales <= MAX_SUCURSALES || maxSucursales <= 0) {
             return Retorno.error1("NO SE PUEDO ESTAGBLECER EL MAXIMO DE SUCURSALES :" + maxSucursales + " , MAXIMO DE SUCURSALES :" + this.MAX_SUCURSALES);
         }
-            this.grafoRegiones = new Grafo(maxSucursales, false); // grafo no dirigido
-
-        System.out.println("max vertices grafo regiones: " + this.grafoRegiones.getMaxVertices());
-            return Retorno.ok();
+        this.grafoRegiones = new Grafo(maxSucursales, false); // grafo no dirigido
+        return Retorno.ok();
     }
 
     @Override
@@ -50,13 +49,13 @@ public class ImplementacionSistema implements Sistema {
         }
         Jugador nuevoJugador = new Jugador(alias, nombre, apellido, categoria);
         abbJugadores.insertar(nuevoJugador);
-        if (categoria == Categoria.ESTANDARD){
+        if (categoria == Categoria.ESTANDARD) {
             abbJugadoresEstandares.insertar(nuevoJugador);
         }
-        if (categoria == Categoria.PRINCIPIANTE){
+        if (categoria == Categoria.PRINCIPIANTE) {
             abbJugadoresPrincipiantes.insertar(nuevoJugador);
         }
-        if (categoria == Categoria.PROFESIONAL){
+        if (categoria == Categoria.PROFESIONAL) {
             abbJugadoresProfesionales.insertar(nuevoJugador);
         }
         return Retorno.ok("JUGADOR INSERTADO EXITOSAMENTE");
@@ -97,10 +96,10 @@ public class ImplementacionSistema implements Sistema {
     @Override
     public Retorno listarJugadoresPorCategoria(Categoria unaCategoria) {
         NodoABB raiz = abbJugadoresEstandares.getRaiz();
-        if (unaCategoria == Categoria.PRINCIPIANTE){
+        if (unaCategoria == Categoria.PRINCIPIANTE) {
             raiz = abbJugadoresPrincipiantes.getRaiz();
         }
-        if (unaCategoria == Categoria.PROFESIONAL){
+        if (unaCategoria == Categoria.PROFESIONAL) {
             raiz = abbJugadoresProfesionales.getRaiz();
         }
 
@@ -140,7 +139,7 @@ public class ImplementacionSistema implements Sistema {
 
     @Override
     public Retorno agregarJugadorAEquipo(String nombreEquipo, String aliasJugador) {
-        if (UTILS.esStringVacioONull(nombreEquipo)|| UTILS.esStringVacioONull(aliasJugador)) {
+        if (UTILS.esStringVacioONull(nombreEquipo) || UTILS.esStringVacioONull(aliasJugador)) {
             return Retorno.error1("ALGUN PARAMETRO ES NULL O VACIO");
         }
         Equipo equipoEncontrado = abbEquipos.buscar(new Equipo(nombreEquipo));
@@ -151,11 +150,11 @@ public class ImplementacionSistema implements Sistema {
         if (jugadorEncontrado == null) {
             return Retorno.error3("NO EXISTE JUGADOR CON ALIAS " + aliasJugador);
         }
-        if (equipoEncontrado.getAbbIntegrantes().cantElementos() == 5){
+        if (equipoEncontrado.getAbbIntegrantes().cantElementos() == 5) {
             return Retorno.error4("EL EQUIPO " + nombreEquipo + " YA TIENE 5 INTEGRANTES");
         }
         Jugador jugadorEnEquipo = abbEquipos.buscarJugadorEnEquipos(aliasJugador);
-        if (jugadorEnEquipo != null){
+        if (jugadorEnEquipo != null) {
             return Retorno.error6("EL JUGADOR : " + aliasJugador + " AL EQUIPO : " + jugadorEnEquipo.getNombreEquipo());
         }
         equipoEncontrado.getAbbIntegrantes().insertar(jugadorEncontrado);
@@ -170,7 +169,7 @@ public class ImplementacionSistema implements Sistema {
             return Retorno.error1("NOMBRE DE QUIPO ES NULL O VACIO");
         }
         Equipo equipoBuscado = abbEquipos.buscar(new Equipo(nombreEquipo));
-        if(equipoBuscado == null) {
+        if (equipoBuscado == null) {
             return Retorno.error2("NO EXISTE EQUIPO CON ESE NOMBRE");
 
         }
@@ -243,20 +242,42 @@ public class ImplementacionSistema implements Sistema {
         if (posVertice1 == -1 || posVertice2 == -1) {
             return Retorno.error3("Alguna de las sucursales no existe.");
         }
-
-        if (grafoRegiones.existeArista(grafoRegiones.obtenerVertice(posVertice1), grafoRegiones.obtenerVertice(posVertice2))) {
+        if (grafoRegiones.existeArista(vertice1, vertice2)) {
             return Retorno.error4("Ya existe una conexión entre las dos sucursales.");
         }
 
         Arista nuevaArista = new Arista(latencia);
-        grafoRegiones.agregarArista(grafoRegiones.obtenerVertice(posVertice1), grafoRegiones.obtenerVertice(posVertice2), nuevaArista);
+        Vertice sucursal1 = grafoRegiones.obtenerVertice(posVertice1);
+        Vertice sucursal2 = grafoRegiones.obtenerVertice(posVertice2);
+        grafoRegiones.agregarArista(sucursal1, sucursal2, nuevaArista);
 
+        grafoRegiones.agregarArista(sucursal2, sucursal1, nuevaArista);
         return Retorno.ok("Conexión registrada exitosamente.");
     }
 
     @Override
     public Retorno actualizarConexion(String codigoSucursal1, String codigoSucursal2, int latencia) {
-        return Retorno.noImplementada();
+        if (latencia < 0) {
+            return Retorno.error1("La latencia no puede ser negativa.");
+        }
+
+        if (codigoSucursal1 == null || codigoSucursal1.isEmpty() || codigoSucursal2 == null || codigoSucursal2.isEmpty()) {
+            return Retorno.error2("Alguno de los parámetros de código de sucursal es vacío o null.");
+        }
+
+        Vertice sucursalOrigen = new Vertice(codigoSucursal1);
+        Vertice sucursalDestino = new Vertice(codigoSucursal2);
+
+        if (grafoRegiones.obtenerPos(sucursalOrigen) == -1 || grafoRegiones.obtenerPos(sucursalDestino) == -1) {
+            return Retorno.error3("Una o ambos codigo de sucursal no existen en el Actual Grafo de Regiones.");
+        }
+
+        System.out.println("->" + grafoRegiones.existeArista(sucursalOrigen, sucursalDestino));
+        if (!grafoRegiones.existeArista(sucursalOrigen, sucursalDestino)) {
+            return Retorno.error4("No existe la conexion entre Sucursales.");
+        }
+        grafoRegiones.actualizarArista(sucursalOrigen, sucursalDestino, latencia);
+        return Retorno.ok("Conexión actualizada exitosamente.");
     }
 
     @Override

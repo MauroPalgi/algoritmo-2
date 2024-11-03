@@ -1,7 +1,6 @@
 package estructuras;
 
 
-
 import interfaz.ICola;
 import interfaz.ILista;
 
@@ -41,7 +40,7 @@ public class Grafo {
         return vertices;
     }
 
-    public int getMaxVertices(){
+    public int getMaxVertices() {
         return this.maxVertices;
     }
 
@@ -92,7 +91,14 @@ public class Grafo {
     public Arista obtenerArista(Vertice vInicial, Vertice vFinal) {
         int posVinicial = obtenerPos(vInicial);
         int posVfinal = obtenerPos(vFinal);
-
+        System.out.println(posVinicial);
+        System.out.println(posVfinal);
+        for (int i = 0; i < aristas.length; i++) {
+            for (int j = 0; j < aristas[i].length; j++) {
+                Arista a = aristas[i][j];
+                System.out.println(a.toString());
+            }
+        }
         return aristas[posVinicial][posVfinal];
     }
 
@@ -231,6 +237,7 @@ public class Grafo {
         }
         return null;
     }
+
     public boolean existeArista(Vertice origen, Vertice destino) {
         int posOrigen = obtenerPos(origen);
         int posDestino = obtenerPos(destino);
@@ -240,13 +247,25 @@ public class Grafo {
         }
 
         // aca es para ver si es en ambas direcciones
-        if (aristas[posOrigen][posDestino] != null) {
-            return true;
+        Arista aristaActual = aristas[posOrigen][posDestino];
+        Arista aristaActualInvertida = aristas[posDestino][posOrigen];
+
+        if (dirigido) {
+            return aristaActual.isExiste();
         }
-        return !dirigido && aristas[posDestino][posOrigen] != null;
+        return !dirigido && aristaActual.isExiste() && aristaActualInvertida.isExiste();
     }
 
-
+    public void actualizarArista(Vertice origen, Vertice destino, int latencia) {
+        int posOrigen = obtenerPos(origen);
+        int posDestino = obtenerPos(destino);
+        if (posOrigen != -1 && posDestino != -1) {
+            aristas[posOrigen][posDestino].setPeso(latencia);
+            if (!dirigido) {
+                aristas[posDestino][posOrigen].setPeso(latencia);
+            }
+        }
+    }
 
 
 }

@@ -13,11 +13,9 @@ public class ImplementacionSistema implements Sistema {
 
     private static final int MAX_SUCURSALES = 3;
     // SUCURSAL
-    private ListaDoble<Sucursal> listaSucursales; // estructura temporal hasta poder implementar graphs
-    private int numSucursalesActuales;
+    private Grafo grafoRegiones;
 
     // JUGADOR
-
     private ABB<Jugador> abbJugadores = new ABB<>();
     private ABB<Jugador>  abbJugadoresEstandares = new ABB<>();
     private ABB<Jugador>  abbJugadoresPrincipiantes = new ABB<>();
@@ -31,18 +29,19 @@ public class ImplementacionSistema implements Sistema {
     public Retorno inicializarSistema(int maxSucursales) {
         if (maxSucursales <= MAX_SUCURSALES || maxSucursales <= 0) {
             return Retorno.error1("NO SE PUEDO ESTAGBLECER EL MAXIMO DE SUCURSALES :" + maxSucursales + " , MAXIMO DE SUCURSALES :" + this.MAX_SUCURSALES);
-        } else {
-            numSucursalesActuales = maxSucursales;
-            return Retorno.ok();
         }
+            this.grafoRegiones = new Grafo(maxSucursales, false); // grafo no dirigido
+
+        System.out.println("max vertices grafo regiones: " + this.grafoRegiones.getMaxVertices());
+            return Retorno.ok();
     }
 
     @Override
     public Retorno registrarJugador(String alias, String nombre, String apellido, Categoria categoria) {
         System.out.println(alias);
         if (UTILS.esStringVacioONull(alias) ||
-            UTILS.esStringVacioONull(nombre) ||
-            UTILS.esStringVacioONull(apellido) ||
+                UTILS.esStringVacioONull(nombre) ||
+                UTILS.esStringVacioONull(apellido) ||
                 categoria == null) {
             return Retorno.error1("ALGUN PARAMETRO ES NULL O VACIO");
         }
@@ -203,15 +202,48 @@ public class ImplementacionSistema implements Sistema {
         return right + current + left;
     }
 
-
     @Override
     public Retorno registrarSucursal(String codigo, String nombre) {
-        return Retorno.noImplementada();
+
+        if (grafoRegiones.getMaxVertices() <= grafoRegiones.cantVertices()) {
+            return Retorno.error1("Se alcanzó el límite de sucursales permitidas.");
+        }
+
+        if (codigo == null || codigo.isEmpty() || nombre == null || nombre.isEmpty()) {
+            return Retorno.error2("Código o nombre son vacíos o null.");
+        }
+
+        Vertice verticeExistente = new Vertice(codigo);
+        if (grafoRegiones.obtenerPos(verticeExistente) != -1) {
+            return Retorno.error3("Ya existe una sucursal con ese código.");
+        }
+
+        Vertice nuevoVertice = new Vertice(codigo, nombre);
+        grafoRegiones.agregarVertice(nuevoVertice);
+
+        return Retorno.ok("Sucursal registrada exitosamente.");
     }
 
-    @Override
+
     public Retorno registrarConexion(String codigoSucursal1, String codigoSucursal2, int latencia) {
-        return Retorno.noImplementada();
+        if (latencia < 0) {
+            return Retorno.error1("La latencia no puede ser negativa.");
+        }
+
+        Vertice vertice1 = new Vertice(codigoSucursal1);
+        Vertice vertice2 = new Vertice(codigoSucursal2);
+
+        int posVertice1 = grafoRegiones.obtenerPos(vertice1);
+        int posVertice2 = grafoRegiones.obtenerPos(vertice2);
+
+        if (posVertice1 == -1 || posVertice2 == -1) {
+            return Retorno.error3("Alguna de las sucursales no existe.");
+        }
+
+        Arista nuevaArista = new Arista(latencia);
+        grafoRegiones.agregarArista(grafoRegiones.obtenerVertice(posVertice1), grafoRegiones.obtenerVertice(posVertice2), nuevaArista);
+
+        return Retorno.ok("Conexión registrada exitosamente.");
     }
 
     @Override

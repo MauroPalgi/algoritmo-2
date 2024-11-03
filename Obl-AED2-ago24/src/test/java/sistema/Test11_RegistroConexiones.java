@@ -54,7 +54,7 @@ public class Test11_RegistroConexiones {
     }
     @Test
     public void testError2(){
-       assertError2(s.registrarConexion(null,null,12));
+        assertError2(s.registrarConexion(null,null,12));
         assertError2(s.registrarConexion(new String(""),null,12));
         assertError2(s.registrarConexion(null,new String(""),12));
         assertError2(s.registrarConexion(new String(""),new String(""),12));

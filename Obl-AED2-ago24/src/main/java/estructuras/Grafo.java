@@ -37,6 +37,19 @@ public class Grafo {
         }
     }
 
+    public Vertice[] getVertices() {
+        return vertices;
+    }
+
+    public int getMaxVertices(){
+        return this.maxVertices;
+    }
+
+    public int cantVertices() {
+        return cantVertices;
+    }
+
+
     public void agregarVertice(Vertice vert) {
         if (cantVertices < maxVertices) {
             int posLibre = obtenerPosLibre();
@@ -181,7 +194,7 @@ public class Grafo {
         }
     }
 
-    private int obtenerSiguienteVerticeNoVisitadoDeMenorCosto(int[] costos, boolean[] visitados) {
+    public int obtenerSiguienteVerticeNoVisitadoDeMenorCosto(int[] costos, boolean[] visitados) {
         int posMin = -1;
         int min = Integer.MAX_VALUE;
         for (int i = 0; i < maxVertices; i++) {
@@ -194,7 +207,7 @@ public class Grafo {
     }
 
 
-    private int obtenerPos(Vertice vert) {
+    public int obtenerPos(Vertice vert) {
         for (int i = 0; i < vertices.length; i++) {
             if (vertices[i] != null && vertices[i].equals(vert)) {
                 return i;
@@ -203,13 +216,20 @@ public class Grafo {
         return -1;
     }
 
-    private int obtenerPosLibre() {
+    public int obtenerPosLibre() {
         for (int i = 0; i < vertices.length; i++) {
             if (vertices[i] == null) {
                 return i;
             }
         }
         return -1;
+    }
+
+    public Vertice obtenerVertice(int pos) {
+        if (pos >= 0 && pos < vertices.length) {
+            return vertices[pos];
+        }
+        return null;
     }
 
 

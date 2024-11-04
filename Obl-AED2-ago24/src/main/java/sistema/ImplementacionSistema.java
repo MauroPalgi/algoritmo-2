@@ -225,7 +225,7 @@ public class ImplementacionSistema implements Sistema {
 
 
     public Retorno registrarConexion(String codigoSucursal1, String codigoSucursal2, int latencia) {
-        if (latencia < 0) {
+        if (latencia <= 0) {
             return Retorno.error1("La latencia no puede ser negativa.");
         }
 
@@ -257,7 +257,7 @@ public class ImplementacionSistema implements Sistema {
 
     @Override
     public Retorno actualizarConexion(String codigoSucursal1, String codigoSucursal2, int latencia) {
-        if (latencia < 0) {
+        if (latencia <= 0) {
             return Retorno.error1("La latencia no puede ser negativa.");
         }
 
@@ -282,26 +282,40 @@ public class ImplementacionSistema implements Sistema {
 
     @Override
     public Retorno analizarSucursal(String codigoSucursal) {
-        System.out.println(codigoSucursal);
         if (codigoSucursal == null || codigoSucursal.isEmpty()) {
             return Retorno.error1("Codigo es vacío o null.");
         }
-
         int posSucursal = grafoRegiones.obtenerPos(new Vertice(codigoSucursal));
         if (posSucursal == -1) {
             return Retorno.error2("La sucursal no existe.");
         }
         Vertice sucursal = grafoRegiones.obtenerVertice(posSucursal);
-
         boolean esPuntoCritico = grafoRegiones.esPuntoCritico(sucursal);
-        System.out.println("ES PUNTO CRITICO : " + esPuntoCritico);
-        String respuesta = esPuntoCritico ? "SI" : "NO";
-        System.out.println(respuesta);
-        return Retorno.ok(respuesta);
+        return Retorno.ok(esPuntoCritico ? "SI" : "NO");
     }
 
     @Override
     public Retorno sucursalesParaTorneo(String codigoSucursalAnfitriona, int latenciaLimite) {
-        return Retorno.noImplementada();
+        if (codigoSucursalAnfitriona == null || codigoSucursalAnfitriona.isEmpty()) {
+            return Retorno.error1("Codigo Sucursal anfitriona es vacío o null.");
+        }
+
+
+        int posSucursal = grafoRegiones.obtenerPos(new Vertice(codigoSucursalAnfitriona));
+        if (posSucursal == -1) {
+            return Retorno.error2("No existe el código de la sucursal anfitriona.");
+        }
+
+        if (latenciaLimite <= 0) {
+            return Retorno.error3("La latencia no puede ser negativa.");
+        }
+        Vertice sucursal = grafoRegiones.obtenerVertice(posSucursal);
+        ABBSucursal sucursalesMenorLatencia = (ABBSucursal) grafoRegiones.obtenerABBSucursalesMenorLatencia(sucursal, latenciaLimite);
+        String sucursalesString = sucursalesMenorLatencia.listarAscendenteString();
+        Vertice sucursalMayorLatencia = sucursalesMenorLatencia.obtenerVerticeMayorLatencia();
+        System.out.println(sucursalMayorLatencia.getLatencia());
+        System.out.println(sucursalesString);
+
+        return Retorno.ok(sucursalMayorLatencia.getLatencia(),sucursalesString);
     }
 }

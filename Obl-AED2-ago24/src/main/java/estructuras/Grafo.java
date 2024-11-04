@@ -1,8 +1,10 @@
 package estructuras;
 
 
+import dominio.Sucursal;
 import interfaz.ICola;
 import interfaz.ILista;
+import utils.UTILS;
 
 import java.util.Arrays;
 
@@ -163,37 +165,24 @@ public class Grafo {
         int posSucursal = obtenerPos(vert); // Posición del vértice a verificar
         int posPrimerVisitado = -1;
         boolean[] visitadosOriginales = new boolean[maxVertices];
-
-        System.out.println("POS : " + posSucursal);
-
         this.dfs(posSucursal, visitadosOriginales);
-        System.out.println("A : " + Arrays.toString(visitadosOriginales));
-
         for (int i = 0; i < visitadosOriginales.length; i++) {
             if (visitadosOriginales[i] && i != posSucursal) {
                 posPrimerVisitado = i;
                 break;
             }
         }
-
         if (posPrimerVisitado == -1) {
             return false;
         }
-
         boolean[] visitadosConExclusion = new boolean[maxVertices];
         visitadosConExclusion[posSucursal] = true; // Excluir posSucursal
-        System.out.println(posPrimerVisitado);
-        System.out.println("B 0 : " + Arrays.toString(visitadosConExclusion));
-
         this.dfs(posPrimerVisitado, visitadosConExclusion);
-        System.out.println("B : " + Arrays.toString(visitadosConExclusion));
-
         for (int i = 0; i < visitadosOriginales.length; i++) {
             if (visitadosOriginales[i] != visitadosConExclusion[i]) {
                 return true;
             }
         }
-
         return false;
     }
 
@@ -298,5 +287,44 @@ public class Grafo {
         }
     }
 
+    public ABBSucursal obtenerABBSucursalesMenorLatencia(Vertice vInicial, int latenciaLimite) {
+        boolean[] visitados = new boolean[maxVertices];
+        int[] costos = new int[maxVertices];
+        int[] vengo = new int[maxVertices];
+        ABBSucursal sucursales = new ABBSucursal();
+
+        for (int i = 0; i < maxVertices; i++) {
+            costos[i] = Integer.MAX_VALUE;
+            vengo[i] = -1;
+            visitados[i] = false;
+        }
+
+        int posOrigen = obtenerPos(vInicial);
+        costos[posOrigen] = 0;
+
+        vertices[posOrigen].setLatencia(0);
+        sucursales.insertar(vertices[posOrigen]);
+        for (int i = 0; i < cantVertices; i++) {
+            int pos = obtenerSiguienteVerticeNoVisitadoDeMenorCosto(costos, visitados);
+            if (pos != -1) {
+                visitados[pos] = true;
+                for (int j = 0; j < maxVertices; j++) {
+                    if (aristas[pos][j].isExiste() && !visitados[j]) {
+                        int distanciaNueva = costos[pos] + aristas[pos][j].getPeso();
+                        if (distanciaNueva <= latenciaLimite && costos[j] > distanciaNueva) {
+                                vertices[j].setLatencia(distanciaNueva);
+                                sucursales.insertar(vertices[j]);
+                                costos[j] = distanciaNueva;
+                                vengo[j] = pos;
+
+
+                        }
+                    }
+                }
+            }
+        }
+        sucursales.listarAscendente();
+        return sucursales;
+    }
 
 }

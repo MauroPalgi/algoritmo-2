@@ -15,4 +15,13 @@ public class UTILS {
         }
         return true;
     }
+
+    public static int findIndex(int[] array, int value) {
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] == value) {
+                return i; // Retornar la primera posición donde se encuentra el valor
+            }
+        }
+        return -1; // En caso de que no se encuentre el valor
+    }
 }

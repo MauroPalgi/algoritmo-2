@@ -1,16 +1,16 @@
 package dominio;
 
-import estructuras.ABBJugador;
+import estructuras.ABB;
 
 public class Equipo implements Comparable<Equipo> {
     private String nombre;
     private String manager;
 
-    public ABBJugador getAbbIntegrantes() {
+    public ABB<Jugador> getAbbIntegrantes() {
         return abbIntegrantes;
     }
 
-    private ABBJugador abbIntegrantes = new ABBJugador();
+    private ABB<Jugador> abbIntegrantes = new ABB<Jugador>();
 
     public Equipo(String nombre, String manager) {
         this.nombre = nombre;

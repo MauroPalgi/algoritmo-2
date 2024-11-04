@@ -64,7 +64,7 @@ public class ABB<T extends Comparable<T>> {
 
     private T buscar(NodoABB<T> nodo, T dato) {
         if (nodo != null) {
-        System.out.println(dato.toString());
+            System.out.println(dato.toString());
             if (nodo.getDato().compareTo(dato) == 0) {
                 return nodo.getDato();
             } else if (nodo.getDato().compareTo(dato) > 0) {
@@ -139,12 +139,39 @@ public class ABB<T extends Comparable<T>> {
         return "";
     }
 
-    public int cantElementos(){
+    public String listarAscendenteString() {
+        return listarAscendenteString(raiz, true);
+    }
+
+    private String listarAscendenteString(NodoABB<T> nodo, boolean isFirst) {
+        if (nodo != null) {
+            String resultado = "";
+
+            // Llamada recursiva para la subrama izquierda
+            resultado += listarAscendenteString(nodo.getIzq(), isFirst);
+
+            // Agregar separador solo si no es el primer elemento
+            if (!isFirst) {
+                resultado += "|";
+            }
+
+            // Agregar el dato del nodo actual
+            resultado += nodo.getDato();
+
+            // Continuar con la subrama derecha
+            resultado += listarAscendenteString(nodo.getDer(), false);
+
+            return resultado;
+        }
+        return "";
+    }
+
+    public int cantElementos() {
         return cantElementos(this.raiz);
     }
 
     private int cantElementos(NodoABB<T> nodo) {
-        if (nodo == null){
+        if (nodo == null) {
             return 0;
         }
         return 1 + cantElementos(nodo.getDer()) + cantElementos(nodo.getIzq());

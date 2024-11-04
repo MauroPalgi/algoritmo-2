@@ -40,9 +40,14 @@ public class Sucursal implements Comparable<Sucursal> {
         return conexiones;
     }
 
+//    @Override
+//    public String toString() {
+//        return codigo + ';' + nombre;
+//    }
+
     @Override
     public String toString() {
-        return codigo + ';' + nombre;
+        return codigo + ';' + nombre + ";";
     }
 
     @Override

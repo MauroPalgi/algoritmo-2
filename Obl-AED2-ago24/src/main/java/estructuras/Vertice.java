@@ -1,10 +1,13 @@
 package estructuras;
 
+import dominio.Jugador;
+
 import java.util.Objects;
 
-public class Vertice {
+public class Vertice implements Comparable<Vertice> {
     private String nombre;
     private String descripcion;
+    private Integer latencia = -1;
 
     public Vertice(String nombre, String descripcion) {
         this.nombre = nombre;
@@ -14,7 +17,6 @@ public class Vertice {
     public Vertice(String nombre) {
         this.nombre = nombre;
     }
-
 
     public String getNombre() {
         return nombre;
@@ -32,6 +34,14 @@ public class Vertice {
         this.descripcion = descripcion;
     }
 
+    public int getLatencia() {
+        return latencia;
+    }
+
+    public void setLatencia(int latencia) {
+        this.latencia = latencia;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -42,6 +52,12 @@ public class Vertice {
 
     @Override
     public String toString() {
-        return "Vertice[" + nombre + ", " + descripcion + ']';
+        return nombre + ";" + descripcion;
+    }
+    
+
+    @Override
+    public int compareTo(Vertice otro) {
+        return this.nombre.compareTo(otro.nombre);
     }
 }

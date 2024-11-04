@@ -47,8 +47,8 @@ public class Test13_SucursalCritica {
         assertOk(s.registrarConexion(CODIGO_SUCURSAL_2, CODIGO_SUCURSAL_1, 23));
         assertOk(s.registrarConexion(CODIGO_SUCURSAL_5, CODIGO_SUCURSAL_1, 23));
         assertOk(s.analizarSucursal(CODIGO_SUCURSAL_1), "SI");
-//        assertOk(s.analizarSucursal(CODIGO_SUCURSAL_5), "NO");
-//        assertOk(s.analizarSucursal(CODIGO_SUCURSAL_5), "NO");
+        assertOk(s.analizarSucursal(CODIGO_SUCURSAL_5), "NO");
+        assertOk(s.analizarSucursal(CODIGO_SUCURSAL_5), "NO");
     }
 
     @Test

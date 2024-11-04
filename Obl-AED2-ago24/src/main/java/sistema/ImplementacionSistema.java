@@ -282,7 +282,22 @@ public class ImplementacionSistema implements Sistema {
 
     @Override
     public Retorno analizarSucursal(String codigoSucursal) {
-        return Retorno.noImplementada();
+        System.out.println(codigoSucursal);
+        if (codigoSucursal == null || codigoSucursal.isEmpty()) {
+            return Retorno.error1("Codigo es vacío o null.");
+        }
+
+        int posSucursal = grafoRegiones.obtenerPos(new Vertice(codigoSucursal));
+        if (posSucursal == -1) {
+            return Retorno.error2("La sucursal no existe.");
+        }
+        Vertice sucursal = grafoRegiones.obtenerVertice(posSucursal);
+
+        boolean esPuntoCritico = grafoRegiones.esPuntoCritico(sucursal);
+        System.out.println("ES PUNTO CRITICO : " + esPuntoCritico);
+        String respuesta = esPuntoCritico ? "SI" : "NO";
+        System.out.println(respuesta);
+        return Retorno.ok(respuesta);
     }
 
     @Override

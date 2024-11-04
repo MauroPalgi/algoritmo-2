@@ -4,6 +4,8 @@ package estructuras;
 import interfaz.ICola;
 import interfaz.ILista;
 
+import java.util.Arrays;
+
 public class Grafo {
     private final Vertice[] vertices;
     private final Arista[][] aristas;
@@ -91,12 +93,9 @@ public class Grafo {
     public Arista obtenerArista(Vertice vInicial, Vertice vFinal) {
         int posVinicial = obtenerPos(vInicial);
         int posVfinal = obtenerPos(vFinal);
-        System.out.println(posVinicial);
-        System.out.println(posVfinal);
         for (int i = 0; i < aristas.length; i++) {
             for (int j = 0; j < aristas[i].length; j++) {
                 Arista a = aristas[i][j];
-                System.out.println(a.toString());
             }
         }
         return aristas[posVinicial][posVfinal];
@@ -121,7 +120,6 @@ public class Grafo {
     }
 
     private void dfs(int posV, boolean[] visitados) {
-        System.out.print(vertices[posV] + " ");
         visitados[posV] = true;
         for (int i = 0; i < aristas.length; i++) {
             if (aristas[posV][i].isExiste() && !visitados[i]) {
@@ -162,6 +160,39 @@ public class Grafo {
         - Comparo el array de visitado de ambas ejecuciones de dfs, si hay diferencias devuelvo true,
             ya que el vertice vert es un punto crítico.
          */
+        int posSucursal = obtenerPos(vert); // Posición del vértice a verificar
+        int posPrimerVisitado = -1;
+        boolean[] visitadosOriginales = new boolean[maxVertices];
+
+        System.out.println("POS : " + posSucursal);
+
+        this.dfs(posSucursal, visitadosOriginales);
+        System.out.println("A : " + Arrays.toString(visitadosOriginales));
+
+        for (int i = 0; i < visitadosOriginales.length; i++) {
+            if (visitadosOriginales[i] && i != posSucursal) {
+                posPrimerVisitado = i;
+                break;
+            }
+        }
+
+        if (posPrimerVisitado == -1) {
+            return false;
+        }
+
+        boolean[] visitadosConExclusion = new boolean[maxVertices];
+        visitadosConExclusion[posSucursal] = true; // Excluir posSucursal
+        System.out.println(posPrimerVisitado);
+        System.out.println("B 0 : " + Arrays.toString(visitadosConExclusion));
+
+        this.dfs(posPrimerVisitado, visitadosConExclusion);
+        System.out.println("B : " + Arrays.toString(visitadosConExclusion));
+
+        for (int i = 0; i < visitadosOriginales.length; i++) {
+            if (visitadosOriginales[i] != visitadosConExclusion[i]) {
+                return true;
+            }
+        }
 
         return false;
     }

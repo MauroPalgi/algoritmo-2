@@ -301,7 +301,6 @@ public class Grafo {
 
         int posOrigen = obtenerPos(vInicial);
         costos[posOrigen] = 0;
-
         vertices[posOrigen].setLatencia(0);
         sucursales.insertar(vertices[posOrigen]);
         for (int i = 0; i < cantVertices; i++) {
@@ -316,8 +315,6 @@ public class Grafo {
                                 sucursales.insertar(vertices[j]);
                                 costos[j] = distanciaNueva;
                                 vengo[j] = pos;
-
-
                         }
                     }
                 }

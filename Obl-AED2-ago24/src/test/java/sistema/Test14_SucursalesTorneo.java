@@ -12,7 +12,7 @@ public class Test14_SucursalesTorneo {
 
     @BeforeEach
     public void setUp() {
-        s.inicializarSistema(20);
+        s.inicializarSistema(100);
 
         s.registrarSucursal(copiarTexto("I"), "Sucursal I");
 
@@ -113,13 +113,13 @@ public class Test14_SucursalesTorneo {
 
 
         // la distancia maxima es al vertice F
-        assertOk(s.sucursalesParaTorneo("A", 22), 7,
-                "A;Sucursal A|B;Sucursal B|C;Sucursal C|D;Sucursal D");
+        assertOk(s.sucursalesParaTorneo("A", 22), 22,
+                "A;Sucursal A|B;Sucursal B|C;Sucursal C|D;Sucursal D|E;Sucursal E|F;Sucursal F|G;Sucursal G");
 
         assertOk(s.sucursalesParaTorneo("A", 15), 7,
                 "A;Sucursal A|B;Sucursal B|C;Sucursal C|D;Sucursal D");
 
-        // Pruebo actualizar los datos de la conexion para ver que funcione
+        //Pruebo actualizar los datos de la conexion para ver que funcione
         assertOk(s.actualizarConexion("A","C",1));
         assertOk(s.actualizarConexion("C","D",3));
         //ahora llegar a D nos cuesta 4, en vez de 7

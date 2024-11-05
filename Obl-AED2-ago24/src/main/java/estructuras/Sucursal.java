@@ -1,20 +1,18 @@
 package estructuras;
 
-import dominio.Jugador;
-
 import java.util.Objects;
 
-public class Vertice implements Comparable<Vertice> {
+public class Sucursal implements Comparable<Sucursal> {
     private String nombre;
     private String descripcion;
     private Integer latencia = -1;
 
-    public Vertice(String nombre, String descripcion) {
+    public Sucursal(String nombre, String descripcion) {
         this.nombre = nombre;
         this.descripcion = descripcion;
     }
 
-    public Vertice(String nombre) {
+    public Sucursal(String nombre) {
         this.nombre = nombre;
     }
 
@@ -46,8 +44,8 @@ public class Vertice implements Comparable<Vertice> {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Vertice vertice = (Vertice) o;
-        return Objects.equals(nombre, vertice.nombre);
+        Sucursal sucursal = (Sucursal) o;
+        return Objects.equals(nombre, sucursal.nombre);
     }
 
     @Override
@@ -57,7 +55,7 @@ public class Vertice implements Comparable<Vertice> {
     
 
     @Override
-    public int compareTo(Vertice otro) {
+    public int compareTo(Sucursal otro) {
         return this.nombre.compareTo(otro.nombre);
     }
 }

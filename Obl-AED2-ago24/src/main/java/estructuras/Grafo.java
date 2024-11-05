@@ -1,16 +1,12 @@
 package estructuras;
 
 
-import dominio.Sucursal;
 import interfaz.ICola;
 import interfaz.ILista;
-import utils.UTILS;
-
-import java.util.Arrays;
 
 public class Grafo {
-    private final Vertice[] vertices;
-    private final Arista[][] aristas;
+    private final Sucursal[] vertices;
+    private final Conexion[][] conexions;
     private int cantVertices;
     private final int maxVertices;
     private final boolean dirigido;
@@ -20,27 +16,27 @@ public class Grafo {
         maxVertices = cantMaxVertices;
         dirigido = esDirigido;
 
-        vertices = new Vertice[maxVertices];
-        aristas = new Arista[maxVertices][maxVertices];
+        vertices = new Sucursal[maxVertices];
+        conexions = new Conexion[maxVertices][maxVertices];
 
         if (dirigido) {
             for (int i = 0; i < maxVertices; i++) {
                 for (int j = 0; j < maxVertices; j++) {
-                    aristas[i][j] = new Arista();
+                    conexions[i][j] = new Conexion();
                 }
             }
         } else {
             for (int i = 0; i < maxVertices; i++) {
                 for (int j = 0; j < maxVertices; j++) {
-                    Arista aux = new Arista();
-                    aristas[i][j] = aux;
-                    aristas[j][i] = aux;
+                    Conexion aux = new Conexion();
+                    conexions[i][j] = aux;
+                    conexions[j][i] = aux;
                 }
             }
         }
     }
 
-    public Vertice[] getVertices() {
+    public Sucursal[] getVertices() {
         return vertices;
     }
 
@@ -53,7 +49,7 @@ public class Grafo {
     }
 
 
-    public void agregarVertice(Vertice vert) {
+    public void agregarVertice(Sucursal vert) {
         if (cantVertices < maxVertices) {
             int posLibre = obtenerPosLibre();
             vertices[posLibre] = vert;
@@ -61,61 +57,61 @@ public class Grafo {
         }
     }
 
-    public void borrarVertice(Vertice vert) {
+    public void borrarVertice(Sucursal vert) {
         int posABorrar = obtenerPos(vert);
 
-        for (int i = 0; i < aristas.length; i++) {
-            aristas[posABorrar][i].setExiste(false);
+        for (int i = 0; i < conexions.length; i++) {
+            conexions[posABorrar][i].setExiste(false);
             if (dirigido) {
-                aristas[i][posABorrar].setExiste(false);
+                conexions[i][posABorrar].setExiste(false);
             }
         }
         vertices[posABorrar] = null;
         cantVertices--;
     }
 
-    public void agregarArista(Vertice vInicial, Vertice vFinal, Arista arista) {
+    public void agregarArista(Sucursal vInicial, Sucursal vFinal, Conexion conexion) {
         int posVinicial = obtenerPos(vInicial);
         int posVfinal = obtenerPos(vFinal);
 
-        Arista a = aristas[posVinicial][posVfinal];
-        a.setPeso(arista.getPeso());
+        Conexion a = conexions[posVinicial][posVfinal];
+        a.setPeso(conexion.getPeso());
         a.setExiste(true);
     }
 
-    public void borrarArista(Vertice vInicial, Vertice vFinal) {
+    public void borrarArista(Sucursal vInicial, Sucursal vFinal) {
         int posVinicial = obtenerPos(vInicial);
         int posVfinal = obtenerPos(vFinal);
 
-        Arista a = aristas[posVinicial][posVfinal];
+        Conexion a = conexions[posVinicial][posVfinal];
         a.setPeso(0);
         a.setExiste(false);
     }
 
-    public Arista obtenerArista(Vertice vInicial, Vertice vFinal) {
+    public Conexion obtenerArista(Sucursal vInicial, Sucursal vFinal) {
         int posVinicial = obtenerPos(vInicial);
         int posVfinal = obtenerPos(vFinal);
-        for (int i = 0; i < aristas.length; i++) {
-            for (int j = 0; j < aristas[i].length; j++) {
-                Arista a = aristas[i][j];
+        for (int i = 0; i < conexions.length; i++) {
+            for (int j = 0; j < conexions[i].length; j++) {
+                Conexion a = conexions[i][j];
             }
         }
-        return aristas[posVinicial][posVfinal];
+        return conexions[posVinicial][posVfinal];
     }
 
-    public ILista<Vertice> adyacentes(Vertice vert) {
-        ILista<Vertice> adyacentes = new Lista<>();
+    public ILista<Sucursal> adyacentes(Sucursal vert) {
+        ILista<Sucursal> adyacentes = new Lista<>();
         int pos = obtenerPos(vert);
 
-        for (int i = 0; i < aristas.length; i++) {
-            if (aristas[pos][i].isExiste()) {
+        for (int i = 0; i < conexions.length; i++) {
+            if (conexions[pos][i].isExiste()) {
                 adyacentes.insertar(vertices[i]);
             }
         }
         return adyacentes;
     }
 
-    public void dfs(Vertice vert) {
+    public void dfs(Sucursal vert) {
         boolean[] visitados = new boolean[maxVertices];
         int posV = obtenerPos(vert);
         dfs(posV, visitados);
@@ -123,14 +119,14 @@ public class Grafo {
 
     private void dfs(int posV, boolean[] visitados) {
         visitados[posV] = true;
-        for (int i = 0; i < aristas.length; i++) {
-            if (aristas[posV][i].isExiste() && !visitados[i]) {
+        for (int i = 0; i < conexions.length; i++) {
+            if (conexions[posV][i].isExiste() && !visitados[i]) {
                 dfs(i, visitados);
             }
         }
     }
 
-    public void bfs(Vertice vert) {
+    public void bfs(Sucursal vert) {
         int posV = obtenerPos(vert);
         boolean[] visitados = new boolean[maxVertices];
         ICola<Integer> cola = new Cola<>();
@@ -139,8 +135,8 @@ public class Grafo {
         while (!cola.estaVacia()) {
             int pos = cola.desencolar();
             System.out.print(vertices[pos] + " ");
-            for (int i = 0; i < aristas.length; i++) {
-                if (aristas[pos][i].isExiste() && !visitados[i]) {
+            for (int i = 0; i < conexions.length; i++) {
+                if (conexions[pos][i].isExiste() && !visitados[i]) {
                     visitados[i] = true;
                     cola.encolar(i);
                 }
@@ -148,7 +144,7 @@ public class Grafo {
         }
     }
 
-    public boolean esPuntoCritico(Vertice vert) {
+    public boolean esPuntoCritico(Sucursal vert) {
         /*
         - Obtener la posicion del vertice vert.
         - Ejecutar dfs (el metodo privado), pasando un array de visitados y la posicion de vert,
@@ -186,7 +182,7 @@ public class Grafo {
         return false;
     }
 
-    public void dijkstra(Vertice vInicial) {
+    public void dijkstra(Sucursal vInicial) {
         boolean[] visitados = new boolean[maxVertices];
         int[] costos = new int[maxVertices];
         int[] vengo = new int[maxVertices];
@@ -208,8 +204,8 @@ public class Grafo {
                 visitados[pos] = true;
 
                 for (int j = 0; j < maxVertices; j++) {
-                    if (aristas[pos][j].isExiste() && !visitados[j]) {
-                        int distanciaNueva = costos[pos] + aristas[pos][j].getPeso();
+                    if (conexions[pos][j].isExiste() && !visitados[j]) {
+                        int distanciaNueva = costos[pos] + conexions[pos][j].getPeso();
                         if (costos[j] > distanciaNueva) {
                             costos[j] = distanciaNueva;
                             vengo[j] = pos;
@@ -233,7 +229,7 @@ public class Grafo {
     }
 
 
-    public int obtenerPos(Vertice vert) {
+    public int obtenerPos(Sucursal vert) {
         for (int i = 0; i < vertices.length; i++) {
             if (vertices[i] != null && vertices[i].equals(vert)) {
                 return i;
@@ -251,14 +247,14 @@ public class Grafo {
         return -1;
     }
 
-    public Vertice obtenerVertice(int pos) {
+    public Sucursal obtenerVertice(int pos) {
         if (pos >= 0 && pos < vertices.length) {
             return vertices[pos];
         }
         return null;
     }
 
-    public boolean existeArista(Vertice origen, Vertice destino) {
+    public boolean existeArista(Sucursal origen, Sucursal destino) {
         int posOrigen = obtenerPos(origen);
         int posDestino = obtenerPos(destino);
 
@@ -267,27 +263,27 @@ public class Grafo {
         }
 
         // aca es para ver si es en ambas direcciones
-        Arista aristaActual = aristas[posOrigen][posDestino];
-        Arista aristaActualInvertida = aristas[posDestino][posOrigen];
+        Conexion conexionActual = conexions[posOrigen][posDestino];
+        Conexion conexionActualInvertida = conexions[posDestino][posOrigen];
 
         if (dirigido) {
-            return aristaActual.isExiste();
+            return conexionActual.isExiste();
         }
-        return !dirigido && aristaActual.isExiste() && aristaActualInvertida.isExiste();
+        return !dirigido && conexionActual.isExiste() && conexionActualInvertida.isExiste();
     }
 
-    public void actualizarArista(Vertice origen, Vertice destino, int latencia) {
+    public void actualizarArista(Sucursal origen, Sucursal destino, int latencia) {
         int posOrigen = obtenerPos(origen);
         int posDestino = obtenerPos(destino);
         if (posOrigen != -1 && posDestino != -1) {
-            aristas[posOrigen][posDestino].setPeso(latencia);
+            conexions[posOrigen][posDestino].setPeso(latencia);
             if (!dirigido) {
-                aristas[posDestino][posOrigen].setPeso(latencia);
+                conexions[posDestino][posOrigen].setPeso(latencia);
             }
         }
     }
 
-    public ABBSucursal obtenerABBSucursalesMenorLatencia(Vertice vInicial, int latenciaLimite) {
+    public ABBSucursal obtenerABBSucursalesMenorLatencia(Sucursal vInicial, int latenciaLimite) {
         boolean[] visitados = new boolean[maxVertices];
         int[] costos = new int[maxVertices];
         int[] vengo = new int[maxVertices];
@@ -308,8 +304,8 @@ public class Grafo {
             if (pos != -1) {
                 visitados[pos] = true;
                 for (int j = 0; j < maxVertices; j++) {
-                    if (aristas[pos][j].isExiste() && !visitados[j]) {
-                        int distanciaNueva = costos[pos] + aristas[pos][j].getPeso();
+                    if (conexions[pos][j].isExiste() && !visitados[j]) {
+                        int distanciaNueva = costos[pos] + conexions[pos][j].getPeso();
                         if (distanciaNueva <= latenciaLimite && costos[j] > distanciaNueva) {
                                 vertices[j].setLatencia(distanciaNueva);
                                 sucursales.insertar(vertices[j]);

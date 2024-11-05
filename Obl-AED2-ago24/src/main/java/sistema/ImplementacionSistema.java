@@ -1,6 +1,5 @@
 package sistema;
 
-import dominio.Sucursal;
 import dominio.Jugador;
 import dominio.Equipo;
 import estructuras.*;
@@ -235,13 +234,13 @@ public class ImplementacionSistema implements Sistema {
             return Retorno.error2("Código o nombre son vacíos o null.");
         }
 
-        Vertice verticeExistente = new Vertice(codigo);
-        if (grafoRegiones.obtenerPos(verticeExistente) != -1) {
+        Sucursal sucursalExistente = new Sucursal(codigo);
+        if (grafoRegiones.obtenerPos(sucursalExistente) != -1) {
             return Retorno.error3("Ya existe una sucursal con ese código.");
         }
 
-        Vertice nuevoVertice = new Vertice(codigo, nombre);
-        grafoRegiones.agregarVertice(nuevoVertice);
+        Sucursal nuevoSucursal = new Sucursal(codigo, nombre);
+        grafoRegiones.agregarVertice(nuevoSucursal);
 
         return Retorno.ok("Sucursal registrada exitosamente.");
     }
@@ -256,8 +255,8 @@ public class ImplementacionSistema implements Sistema {
             return Retorno.error2("Alguno de los parámetros de código de sucursal es vacío o null.");
         }
 
-        Vertice vertice1 = new Vertice(codigoSucursal1);
-        Vertice vertice2 = new Vertice(codigoSucursal2);
+        Sucursal vertice1 = new Sucursal(codigoSucursal1);
+        Sucursal vertice2 = new Sucursal(codigoSucursal2);
 
         int posVertice1 = grafoRegiones.obtenerPos(vertice1);
         int posVertice2 = grafoRegiones.obtenerPos(vertice2);
@@ -269,12 +268,12 @@ public class ImplementacionSistema implements Sistema {
             return Retorno.error4("Ya existe una conexión entre las dos sucursales.");
         }
 
-        Arista nuevaArista = new Arista(latencia);
-        Vertice sucursal1 = grafoRegiones.obtenerVertice(posVertice1);
-        Vertice sucursal2 = grafoRegiones.obtenerVertice(posVertice2);
-        grafoRegiones.agregarArista(sucursal1, sucursal2, nuevaArista);
+        Conexion nuevaConexion = new Conexion(latencia);
+        Sucursal sucursal1 = grafoRegiones.obtenerVertice(posVertice1);
+        Sucursal sucursal2 = grafoRegiones.obtenerVertice(posVertice2);
+        grafoRegiones.agregarArista(sucursal1, sucursal2, nuevaConexion);
 
-        grafoRegiones.agregarArista(sucursal2, sucursal1, nuevaArista);
+        grafoRegiones.agregarArista(sucursal2, sucursal1, nuevaConexion);
         return Retorno.ok("Conexión registrada exitosamente.");
     }
 
@@ -288,8 +287,8 @@ public class ImplementacionSistema implements Sistema {
             return Retorno.error2("Alguno de los parámetros de código de sucursal es vacío o null.");
         }
 
-        Vertice sucursalOrigen = new Vertice(codigoSucursal1);
-        Vertice sucursalDestino = new Vertice(codigoSucursal2);
+        Sucursal sucursalOrigen = new Sucursal(codigoSucursal1);
+        Sucursal sucursalDestino = new Sucursal(codigoSucursal2);
 
         if (grafoRegiones.obtenerPos(sucursalOrigen) == -1 || grafoRegiones.obtenerPos(sucursalDestino) == -1) {
             return Retorno.error3("Una o ambos codigo de sucursal no existen en el Actual Grafo de Regiones.");
@@ -307,11 +306,11 @@ public class ImplementacionSistema implements Sistema {
         if (codigoSucursal == null || codigoSucursal.isEmpty()) {
             return Retorno.error1("Codigo es vacío o null.");
         }
-        int posSucursal = grafoRegiones.obtenerPos(new Vertice(codigoSucursal));
+        int posSucursal = grafoRegiones.obtenerPos(new Sucursal(codigoSucursal));
         if (posSucursal == -1) {
             return Retorno.error2("La sucursal no existe.");
         }
-        Vertice sucursal = grafoRegiones.obtenerVertice(posSucursal);
+        Sucursal sucursal = grafoRegiones.obtenerVertice(posSucursal);
         boolean esPuntoCritico = grafoRegiones.esPuntoCritico(sucursal);
         return Retorno.ok(esPuntoCritico ? "SI" : "NO");
     }
@@ -323,7 +322,7 @@ public class ImplementacionSistema implements Sistema {
         }
 
 
-        int posSucursal = grafoRegiones.obtenerPos(new Vertice(codigoSucursalAnfitriona));
+        int posSucursal = grafoRegiones.obtenerPos(new Sucursal(codigoSucursalAnfitriona));
         if (posSucursal == -1) {
             return Retorno.error2("No existe el código de la sucursal anfitriona.");
         }
@@ -331,10 +330,10 @@ public class ImplementacionSistema implements Sistema {
         if (latenciaLimite <= 0) {
             return Retorno.error3("La latencia no puede ser negativa.");
         }
-        Vertice sucursal = grafoRegiones.obtenerVertice(posSucursal);
+        Sucursal sucursal = grafoRegiones.obtenerVertice(posSucursal);
         ABBSucursal sucursalesMenorLatencia = (ABBSucursal) grafoRegiones.obtenerABBSucursalesMenorLatencia(sucursal, latenciaLimite);
         String sucursalesString = sucursalesMenorLatencia.listarAscendenteString();
-        Vertice sucursalMayorLatencia = sucursalesMenorLatencia.obtenerVerticeMayorLatencia();
+        Sucursal sucursalMayorLatencia = sucursalesMenorLatencia.obtenerVerticeMayorLatencia();
         return Retorno.ok(sucursalMayorLatencia.getLatencia(), sucursalesString);
     }
 }

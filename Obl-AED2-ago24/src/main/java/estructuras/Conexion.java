@@ -1,14 +1,14 @@
 package estructuras;
 
-public class Arista {
+public class Conexion {
     private int peso;
     private boolean existe;
 
-    public Arista() {
+    public Conexion() {
         existe = false;
     }
 
-    public Arista(int peso) {
+    public Conexion(int peso) {
         this.peso = peso;
         this.existe=true;
     }

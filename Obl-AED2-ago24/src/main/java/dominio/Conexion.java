@@ -1,5 +1,7 @@
 package dominio;
 
+import estructuras.Sucursal;
+
 public class Conexion implements Comparable<Conexion> {
     private Sucursal destino;
     private int latencia;

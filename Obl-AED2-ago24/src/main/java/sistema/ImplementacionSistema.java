@@ -248,7 +248,7 @@ public class ImplementacionSistema implements Sistema {
 
 
     public Retorno registrarConexion(String codigoSucursal1, String codigoSucursal2, int latencia) {
-        if (latencia <= 0) {
+        if (latencia < 0) {
             return Retorno.error1("La latencia no puede ser negativa.");
         }
 

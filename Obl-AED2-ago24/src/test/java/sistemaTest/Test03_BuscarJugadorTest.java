@@ -46,10 +46,8 @@ public class Test03_BuscarJugadorTest {
     @Test
     void buscarJugadorExitosamente() { // TODO: REVISAR ERRORES - Mauro - Done
         // Caso: búsqueda exitosa de "jugador1"
-        System.out.println("buscar Jugador Exitosamente");
         sistema.listarJugadoresAscendente();
         retorno = sistema.buscarJugador("jugador1");
-        System.out.println(retorno.getValorString());
         assertEquals(Retorno.Resultado.OK, retorno.getResultado());
         assertEquals("jugador1;Juan;Perez;Estándar", retorno.getValorString());
         assertEquals(1, retorno.getValorInteger()); // Cantidad de elementos recorridos en la búsqueda

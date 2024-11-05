@@ -64,7 +64,6 @@ public class ABB<T extends Comparable<T>> {
 
     private T buscar(NodoABB<T> nodo, T dato) {
         if (nodo != null) {
-            System.out.println(dato.toString());
             if (nodo.getDato().compareTo(dato) == 0) {
                 return nodo.getDato();
             } else if (nodo.getDato().compareTo(dato) > 0) {
@@ -83,7 +82,6 @@ public class ABB<T extends Comparable<T>> {
     private Resultado<T> buscarConIteracion(NodoABB<T> nodo, T dato, int iteraciones) {
         if (nodo != null) {
             iteraciones++;  // Cada vez que se hace una comparación, aumentamos el contador
-            System.out.println("Iteración " + iteraciones + ": Buscando " + dato.toString());
 
             if (nodo.getDato().compareTo(dato) == 0) {
                 return new Resultado<>(nodo.getDato(), iteraciones);  // Nodo encontrado

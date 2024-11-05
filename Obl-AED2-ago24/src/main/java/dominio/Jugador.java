@@ -2,6 +2,8 @@ package dominio;
 
 import interfaz.Categoria;
 
+import java.util.Arrays;
+
 public class Jugador implements Comparable<Jugador> {
     private String alias;
     private String nombre;
@@ -64,7 +66,7 @@ public class Jugador implements Comparable<Jugador> {
 
     @Override
     public String toString() {
-        return alias + ";" + nombre + ";" + apellido  + (categoria != null ? ";" + categoria.getTexto() : "");
+        return alias + ";" + nombre + ";" + apellido  + (categoria != null ? ";" + Categoria.values()[categoria.getIndice()] : "");
     }
 
     @Override

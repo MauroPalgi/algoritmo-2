@@ -73,7 +73,6 @@ public class Lista<T> implements ILista<T> {
             }
             aux = aux.getSig();
         }
-        System.out.println();
     }
 
 //    public void imprimirDatosV2(NodoLista<T> nodo ) {

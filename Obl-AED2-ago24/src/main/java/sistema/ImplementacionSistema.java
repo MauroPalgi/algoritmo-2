@@ -20,7 +20,6 @@ public class ImplementacionSistema implements Sistema {
     private ABB<Jugador> abbJugadoresEstandares = new ABB<>();
     private ABB<Jugador> abbJugadoresPrincipiantes = new ABB<>();
     private ABB<Jugador> abbJugadoresProfesionales = new ABB<>();
-    ;
 
 
     // EQUIPO
@@ -29,15 +28,31 @@ public class ImplementacionSistema implements Sistema {
     @Override
     public Retorno inicializarSistema(int maxSucursales) {
         if (maxSucursales <= MAX_SUCURSALES || maxSucursales <= 0) {
-            return Retorno.error1("NO SE PUEDO ESTAGBLECER EL MAXIMO DE SUCURSALES :" + maxSucursales + " , MAXIMO DE SUCURSALES :" + this.MAX_SUCURSALES);
+            return Retorno.error1("NO SE PUEDO ESTABLECER EL MAXIMO DE SUCURSALES :" + maxSucursales + " , MAXIMO DE SUCURSALES :" + this.MAX_SUCURSALES);
+        }
+        System.out.println("Max Sucursales " + maxSucursales);
+        System.out.println("grafo " + this.grafoRegiones);
+        if (this.grafoRegiones != null) {
+            reiniciarSistema();
         }
         this.grafoRegiones = new Grafo(maxSucursales, false); // grafo no dirigido
         return Retorno.ok();
     }
 
+    private void reiniciarSistema() {
+        grafoRegiones = null;
+
+        abbJugadores = new ABB<>();
+        abbJugadoresEstandares = new ABB<>();
+        abbJugadoresPrincipiantes = new ABB<>();
+        abbJugadoresProfesionales = new ABB<>();
+
+        abbEquipos = new ABBEquipo();
+    }
+
     @Override
     public Retorno registrarJugador(String alias, String nombre, String apellido, Categoria categoria) {
-        System.out.println(alias);
+
         if (UTILS.esStringVacioONull(alias) ||
                 UTILS.esStringVacioONull(nombre) ||
                 UTILS.esStringVacioONull(apellido) ||
@@ -153,7 +168,12 @@ public class ImplementacionSistema implements Sistema {
         if (equipoEncontrado.getAbbIntegrantes().cantElementos() == 5) {
             return Retorno.error4("EL EQUIPO " + nombreEquipo + " YA TIENE 5 INTEGRANTES");
         }
+        Jugador jugadorProfesional = abbJugadoresProfesionales.buscar(new Jugador(aliasJugador));
+        if (jugadorProfesional == null) {
+            return Retorno.error5("EL JUGADOR NO ES PROFESIONAL");
+        }
         Jugador jugadorEnEquipo = abbEquipos.buscarJugadorEnEquipos(aliasJugador);
+        System.out.println("jugador equipo " + jugadorEnEquipo);
         if (jugadorEnEquipo != null) {
             return Retorno.error6("EL JUGADOR : " + aliasJugador + " AL EQUIPO : " + jugadorEnEquipo.getNombreEquipo());
         }
@@ -165,10 +185,13 @@ public class ImplementacionSistema implements Sistema {
 
     @Override
     public Retorno listarJugadoresDeEquipo(String nombreEquipo) {
-        if (UTILS.validarStringParametros(nombreEquipo)) {
+        if (nombreEquipo == null || nombreEquipo.isEmpty()) {
             return Retorno.error1("NOMBRE DE QUIPO ES NULL O VACIO");
         }
+        System.out.println("nombre equipo" + nombreEquipo);
+        abbEquipos.listarAscendente();
         Equipo equipoBuscado = abbEquipos.buscar(new Equipo(nombreEquipo));
+
         if (equipoBuscado == null) {
             return Retorno.error2("NO EXISTE EQUIPO CON ESE NOMBRE");
 
@@ -176,7 +199,7 @@ public class ImplementacionSistema implements Sistema {
 
         String result = inOrden(equipoBuscado.getAbbIntegrantes().getRaiz());
         if (result.isEmpty()) {
-            return Retorno.ok();
+            return Retorno.ok("");
         }
 
         return Retorno.ok(result.substring(0, result.length() - 1));
@@ -272,7 +295,6 @@ public class ImplementacionSistema implements Sistema {
             return Retorno.error3("Una o ambos codigo de sucursal no existen en el Actual Grafo de Regiones.");
         }
 
-        System.out.println("->" + grafoRegiones.existeArista(sucursalOrigen, sucursalDestino));
         if (!grafoRegiones.existeArista(sucursalOrigen, sucursalDestino)) {
             return Retorno.error4("No existe la conexion entre Sucursales.");
         }
@@ -313,9 +335,6 @@ public class ImplementacionSistema implements Sistema {
         ABBSucursal sucursalesMenorLatencia = (ABBSucursal) grafoRegiones.obtenerABBSucursalesMenorLatencia(sucursal, latenciaLimite);
         String sucursalesString = sucursalesMenorLatencia.listarAscendenteString();
         Vertice sucursalMayorLatencia = sucursalesMenorLatencia.obtenerVerticeMayorLatencia();
-        System.out.println(sucursalMayorLatencia.getLatencia());
-        System.out.println(sucursalesString);
-
-        return Retorno.ok(sucursalMayorLatencia.getLatencia(),sucursalesString);
+        return Retorno.ok(sucursalMayorLatencia.getLatencia(), sucursalesString);
     }
 }

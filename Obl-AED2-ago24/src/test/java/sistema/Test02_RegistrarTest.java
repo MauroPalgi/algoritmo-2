@@ -23,11 +23,7 @@ public class Test02_RegistrarTest {
         sistema.agregarJugadorAEquipo("eq1","sofia");
         sistema.agregarJugadorAEquipo("eq1","alvarito");
         sistema.agregarJugadorAEquipo("eq1","gonzalo");
-        System.out.println(sistema.listarJugadoresAscendente());
-        System.out.println(sistema.listarEquiposDescendente());
-        System.out.println(sistema.listarJugadoresPorCategoria(Categoria.ESTANDARD));
-        System.out.println(sistema.listarJugadoresDeEquipo("eq1"));
-        System.out.println(sistema.listarJugadoresDeEquipo("eq2"));
+
 
     }
 }

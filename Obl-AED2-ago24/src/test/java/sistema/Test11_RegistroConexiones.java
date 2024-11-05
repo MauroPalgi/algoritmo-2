@@ -38,7 +38,7 @@ public class Test11_RegistroConexiones {
         assertOk(s.registrarConexion(COD_SUCURSAL_1,CODIGO_SUCURSAL_2,23));
         assertOk(s.registrarConexion(copiarTexto(COD_SUCURSAL_1),copiarTexto(CODIGO_SUCURSAL_5),1));
         assertOk(s.inicializarSistema(10));
-        //Si se reinicio, las sucursales no deben existir mas
+        
         assertError3(s.registrarConexion(COD_SUCURSAL_1,CODIGO_SUCURSAL_2,23));
         assertOk(s.registrarSucursal(COD_SUCURSAL_1,"Nombre 1"));
         assertOk(s.registrarSucursal(CODIGO_SUCURSAL_2,"Nombre 2"));
@@ -73,7 +73,7 @@ public class Test11_RegistroConexiones {
     public void testError4(){
         assertOk(s.registrarConexion(CODIGO_SUCURSAL_5,CODIGO_SUCURSAL_2,23));
         assertError4(s.registrarConexion(CODIGO_SUCURSAL_5,CODIGO_SUCURSAL_2,52));
-        //Si las conexiones son bidireccionales, al registrarla al reves tambien deberia darnos error.
+        
         assertError4(s.registrarConexion(CODIGO_SUCURSAL_2,CODIGO_SUCURSAL_5,52));
 
         assertOk(s.registrarConexion(CODIGO_SUCURSAL_3,CODIGO_SUCURSAL_4,23));

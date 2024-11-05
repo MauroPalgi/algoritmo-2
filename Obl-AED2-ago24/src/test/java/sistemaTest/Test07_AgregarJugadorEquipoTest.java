@@ -17,9 +17,9 @@ public class Test07_AgregarJugadorEquipoTest {
     @BeforeEach
     void inicializarSistema() {
         sistema = new ImplementacionSistema();
-        sistema.inicializarSistema(10); // Inicializar el sistema con capacidad para 10 equipos y 10 jugadores
+        sistema.inicializarSistema(10); 
 
-        // Registrar algunos jugadores y equipos de prueba
+        
         sistema.registrarJugador("jpro1", "Juan", "Pérez", Categoria.PROFESIONAL);
         sistema.registrarJugador("jest1", "Luis", "Martínez", Categoria.ESTANDARD);
         sistema.registrarJugador("jpro2", "Ana", "Gómez", Categoria.PROFESIONAL);
@@ -28,15 +28,15 @@ public class Test07_AgregarJugadorEquipoTest {
     }
 
     @Test
-    void agregarJugadorAEquipoExitosamente() { // TODO: ERRORES  - Constanza
-        // Caso: Agregar un jugador profesional a un equipo
+    void agregarJugadorAEquipoExitosamente() { 
+        
         retorno = sistema.agregarJugadorAEquipo("Equipo1", "jpro1");
         assertEquals(Retorno.Resultado.OK, retorno.getResultado());
     }
 
     @Test
-    void agregarJugadorConParametrosVaciosONull() { // TODO: ERRORES - Mauro
-        // Caso: Parámetros vacíos o nulos
+    void agregarJugadorConParametrosVaciosONull() { 
+        
         retorno = sistema.agregarJugadorAEquipo("", "jpro1");
         assertEquals(Retorno.Resultado.ERROR_1, retorno.getResultado());
 
@@ -52,28 +52,28 @@ public class Test07_AgregarJugadorEquipoTest {
 
     @Test
     void agregarJugadorAEquipoNoExistente() {
-        // Caso: Intentar agregar un jugador a un equipo que no existe
+        
         retorno = sistema.agregarJugadorAEquipo("EquipoInexistente", "jpro1");
         assertEquals(Retorno.Resultado.ERROR_2, retorno.getResultado());
     }
 
     @Test
     void agregarJugadorNoExistenteAEquipo() {
-        // Caso: Intentar agregar un jugador que no existe a un equipo
+        
         retorno = sistema.agregarJugadorAEquipo("Equipo1", "jugadorInexistente");
         assertEquals(Retorno.Resultado.ERROR_3, retorno.getResultado());
     }
 
     @Test
-    void agregarJugadorQueNoEsProfesionalAEquipo() { // TODO: ERRORES - Constanza
-        // Caso: Intentar agregar un jugador que no es de categoría "Profesional"
-        retorno = sistema.agregarJugadorAEquipo("Equipo1", "jest1"); // jest1 es Estándar, no Profesional
+    void agregarJugadorQueNoEsProfesionalAEquipo() { 
+        
+        retorno = sistema.agregarJugadorAEquipo("Equipo1", "jest1"); 
         assertEquals(Retorno.Resultado.ERROR_5, retorno.getResultado());
     }
 
     @Test
-    void agregarJugadorAEquipoQueYaTieneCincoJugadores() { // TODO: ERRORES - Mauro
-        // Agregar 5 jugadores profesionales a un equipo
+    void agregarJugadorAEquipoQueYaTieneCincoJugadores() { 
+        
         sistema.registrarJugador("jpro3", "Pedro", "López", Categoria.PROFESIONAL);
         sistema.registrarJugador("jpro4", "Carla", "Rodríguez", Categoria.PROFESIONAL);
         sistema.registrarJugador("jpro5", "Andrés", "Díaz", Categoria.PROFESIONAL);
@@ -85,19 +85,19 @@ public class Test07_AgregarJugadorEquipoTest {
         sistema.agregarJugadorAEquipo("Equipo1", "jpro4");
         sistema.agregarJugadorAEquipo("Equipo1", "jpro5");
 
-        // Intentar agregar un sexto jugador
+        
         retorno = sistema.agregarJugadorAEquipo("Equipo1", "jpro6");
-        assertEquals(Retorno.Resultado.ERROR_4, retorno.getResultado()); // Ya tiene 5 jugadores
+        assertEquals(Retorno.Resultado.ERROR_4, retorno.getResultado()); 
     }
 
     @Test
-    void agregarJugadorQueYaPerteneceAOtroEquipo() { // TODO: ERRORES - Constanza
-        // Registrar otro equipo y agregar un jugador profesional a él
+    void agregarJugadorQueYaPerteneceAOtroEquipo() { 
+        
         sistema.registrarEquipo("Equipo2", "Ana Pérez");
         sistema.agregarJugadorAEquipo("Equipo2", "jpro2");
 
-        // Intentar agregar el mismo jugador a otro equipo
+        
         retorno = sistema.agregarJugadorAEquipo("Equipo1", "jpro2");
-        assertEquals(Retorno.Resultado.ERROR_6, retorno.getResultado()); // Jugador ya pertenece a Equipo2
+        assertEquals(Retorno.Resultado.ERROR_6, retorno.getResultado()); 
     }
 }

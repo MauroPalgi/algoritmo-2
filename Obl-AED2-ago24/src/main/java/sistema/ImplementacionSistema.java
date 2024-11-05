@@ -11,17 +11,17 @@ public class ImplementacionSistema implements Sistema {
 
 
     private static final int MAX_SUCURSALES = 3;
-    // SUCURSAL
+    
     private Grafo grafoRegiones;
 
-    // JUGADOR
+    
     private ABB<Jugador> abbJugadores = new ABB<>();
     private ABB<Jugador> abbJugadoresEstandares = new ABB<>();
     private ABB<Jugador> abbJugadoresPrincipiantes = new ABB<>();
     private ABB<Jugador> abbJugadoresProfesionales = new ABB<>();
 
 
-    // EQUIPO
+    
     private ABBEquipo abbEquipos = new ABBEquipo();
 
     @Override
@@ -34,7 +34,7 @@ public class ImplementacionSistema implements Sistema {
         if (this.grafoRegiones != null) {
             reiniciarSistema();
         }
-        this.grafoRegiones = new Grafo(maxSucursales, false); // grafo no dirigido
+        this.grafoRegiones = new Grafo(maxSucursales, false); 
         return Retorno.ok();
     }
 
@@ -119,7 +119,7 @@ public class ImplementacionSistema implements Sistema {
         if (result.isEmpty()) {
             return Retorno.ok("");
         }
-        // Remove the last "|" character from the result string, if it exists
+        
         return Retorno.ok(result.substring(0, Math.max(0, result.length() - 1)));
     }
 

@@ -48,7 +48,7 @@ public class Test03_BuscarJugador {
 
         assertOk(s.buscarJugador(copiarTexto("mariana")),1,"mariana;Mariana;Perez;PRINCIPIANTE");
 
-        s.inicializarSistema(10);//tiene que quedar vacio
+        s.inicializarSistema(10);
         assertError2(s.buscarJugador(copiarTexto("sofia")));
         assertError2(s.buscarJugador(copiarTexto("mariana")));
 

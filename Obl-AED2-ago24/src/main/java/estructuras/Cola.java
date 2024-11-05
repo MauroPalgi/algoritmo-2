@@ -19,7 +19,7 @@ public class Cola<T> implements ICola<T> {
         this.largo++;
     }
 
-    // Pre: !esVacia()
+    
     public T desencolar() {
         T dato = this.inicio.dato;
         inicio = inicio.sig;

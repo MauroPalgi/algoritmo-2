@@ -35,7 +35,7 @@ public class Test07_AgregarJugadorAEquipo {
     @Test
     public void testOk() {
 
-        //Hasta 5 se deben poder registrar.
+        
         assertOk(s.agregarJugadorAEquipo(MARION_S_TEAM,copiarTexto("sofia")));
         assertOk(s.agregarJugadorAEquipo(MARION_S_TEAM,copiarTexto("otello")));
         assertOk(s.agregarJugadorAEquipo(MARION_S_TEAM,copiarTexto("esteban")));
@@ -75,7 +75,7 @@ public class Test07_AgregarJugadorAEquipo {
     @Test
     public void testError4() {
 
-        //Hasta 5 se deben poder registrar.
+        
         assertOk(s.agregarJugadorAEquipo(MARION_S_TEAM,copiarTexto("sofia")));
         assertOk(s.agregarJugadorAEquipo(MARION_S_TEAM,copiarTexto("otello")));
         assertOk(s.agregarJugadorAEquipo(MARION_S_TEAM,copiarTexto("esteban")));

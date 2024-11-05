@@ -34,7 +34,7 @@ public class Test13_SucursalCritica {
 
     @Test
     public void testGrafoNuloNingunaEsCritica() {
-        //No hay conexiones, ninguna en teoria es critica.
+        
         assertOk(s.analizarSucursal(CODIGO_SUCURSAL_1), "NO");
         assertOk(s.analizarSucursal(CODIGO_SUCURSAL_2), "NO");
         assertOk(s.analizarSucursal(CODIGO_SUCURSAL_3), "NO");
@@ -65,7 +65,7 @@ public class Test13_SucursalCritica {
         assertOk(s.analizarSucursal(CODIGO_SUCURSAL_2), "NO");
         assertOk(s.analizarSucursal(CODIGO_SUCURSAL_8), "NO");
 
-        //Si conectamos la 2 con otra sucursal, entonces la uno deja de ser el unico vertice por el cual se accede a la dos
+        
         assertOk(s.registrarConexion(CODIGO_SUCURSAL_2, CODIGO_SUCURSAL_4, 23));
         assertOk(s.analizarSucursal(CODIGO_SUCURSAL_1), "NO");
         assertOk(s.analizarSucursal(CODIGO_SUCURSAL_5), "SI");
@@ -115,7 +115,7 @@ public class Test13_SucursalCritica {
         assertOk(s.analizarSucursal(CODIGO_SUCURSAL_4),"NO");
         assertOk(s.analizarSucursal(CODIGO_SUCURSAL_5),"NO");
 
-        //Conectamos un nuevo vertice a la componente conexa ahora el punto por el que se conecta pasa a ser de articulacion
+        
 
         assertOk(s.registrarConexion(CODIGO_SUCURSAL_6,CODIGO_SUCURSAL_5,23));
         assertOk(s.registrarConexion(CODIGO_SUCURSAL_4,CODIGO_SUCURSAL_7,23));

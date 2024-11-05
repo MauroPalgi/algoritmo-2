@@ -76,22 +76,22 @@ public class ABB<T extends Comparable<T>> {
     }
 
     public Resultado<T> buscarConIteracion(T dato) {
-        return buscarConIteracion(raiz, dato, 0);  // Inicializa las iteraciones en 0
+        return buscarConIteracion(raiz, dato, 0);  
     }
 
     private Resultado<T> buscarConIteracion(NodoABB<T> nodo, T dato, int iteraciones) {
         if (nodo != null) {
-            iteraciones++;  // Cada vez que se hace una comparación, aumentamos el contador
+            iteraciones++;  
 
             if (nodo.getDato().compareTo(dato) == 0) {
-                return new Resultado<>(nodo.getDato(), iteraciones);  // Nodo encontrado
+                return new Resultado<>(nodo.getDato(), iteraciones);  
             } else if (nodo.getDato().compareTo(dato) > 0) {
-                return buscarConIteracion(nodo.getIzq(), dato, iteraciones);  // Buscar en el subárbol izquierdo
+                return buscarConIteracion(nodo.getIzq(), dato, iteraciones);  
             } else {
-                return buscarConIteracion(nodo.getDer(), dato, iteraciones);  // Buscar en el subárbol derecho
+                return buscarConIteracion(nodo.getDer(), dato, iteraciones);  
             }
         }
-        return new Resultado<>(null, iteraciones);  // Si no se encuentra, devuelve null y las iteraciones
+        return new Resultado<>(null, iteraciones);  
     }
 
     /**
@@ -145,18 +145,18 @@ public class ABB<T extends Comparable<T>> {
         if (nodo != null) {
             String resultado = "";
 
-            // Llamada recursiva para la subrama izquierda
+            
             resultado += listarAscendenteString(nodo.getIzq(), isFirst);
 
-            // Agregar separador solo si no es el primer elemento
+            
             if (!isFirst) {
                 resultado += "|";
             }
 
-            // Agregar el dato del nodo actual
+            
             resultado += nodo.getDato();
 
-            // Continuar con la subrama derecha
+            
             resultado += listarAscendenteString(nodo.getDer(), false);
 
             return resultado;

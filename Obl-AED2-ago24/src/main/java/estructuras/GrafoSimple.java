@@ -23,7 +23,7 @@ public class GrafoSimple {
 
     public void borrarVertice(int vertice) {
         vertices[vertice] = false;
-        // Faltaron cosas aca!
+        
     }
 
     public void agregarArista(int vInicial, int vFinal) {

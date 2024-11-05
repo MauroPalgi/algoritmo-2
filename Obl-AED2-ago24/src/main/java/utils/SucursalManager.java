@@ -1,12 +1,15 @@
-package estructuras;
+package utils;
+
+import estructuras.ABB;
+import estructuras.Sucursal;
 
 public class SucursalManager {
-    private int maxLatencia; // Latencia máxima de las ciudades
-    private ABB<Sucursal> arbolSucursales; // Árbol que contiene las sucursales
+    private int maxLatencia; 
+    private ABB<Sucursal> arbolSucursales; 
 
     public SucursalManager(int maxLatencia) {
         this.maxLatencia = maxLatencia;
-        this.arbolSucursales = new ABB<>(); // Inicializa el árbol de sucursales
+        this.arbolSucursales = new ABB<>(); 
     }
 
     public int getMaxLatencia() {
@@ -22,7 +25,7 @@ public class SucursalManager {
     }
 
     public void agregarSucursal(Sucursal sucursal) {
-        arbolSucursales.insertar(sucursal); // Método para agregar una sucursal al árbol
+        arbolSucursales.insertar(sucursal); 
     }
 }
 

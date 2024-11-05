@@ -16,48 +16,48 @@ public class Test06_RegistrarEquipoTest {
     @BeforeEach
     void inicializarSistema() {
         sistema = new ImplementacionSistema();
-        sistema.inicializarSistema(10); // Inicializar el sistema con capacidad para 10 equipos
+        sistema.inicializarSistema(10); 
     }
 
     @Test
     void registrarEquipoExitosamente() {
-        // Caso: Registro exitoso de un equipo
+        
         retorno = sistema.registrarEquipo("Los Halcones", "Carlos Martínez");
         assertEquals(Retorno.Resultado.OK, retorno.getResultado());
     }
 
     @Test
     void registrarEquipoConNombreDuplicado() {
-        // Caso: Intentar registrar un equipo con un nombre ya existente
-        sistema.registrarEquipo("Los Halcones", "Carlos Martínez"); // Primer registro exitoso
+        
+        sistema.registrarEquipo("Los Halcones", "Carlos Martínez"); 
 
-        // Segundo intento con el mismo nombre de equipo
+        
         retorno = sistema.registrarEquipo("Los Halcones", "Ana Pérez");
         assertEquals(Retorno.Resultado.ERROR_2, retorno.getResultado());
     }
 
     @Test
     void registrarEquipoConParametrosVaciosONull() {
-        // Caso: Nombre del equipo vacío
+        
         retorno = sistema.registrarEquipo("", "Carlos Martínez");
         assertEquals(Retorno.Resultado.ERROR_1, retorno.getResultado());
 
-        // Caso: Manager vacío
+        
         retorno = sistema.registrarEquipo("Los Leones", "");
         assertEquals(Retorno.Resultado.ERROR_1, retorno.getResultado());
 
-        // Caso: Nombre del equipo nulo
+        
         retorno = sistema.registrarEquipo(null, "Carlos Martínez");
         assertEquals(Retorno.Resultado.ERROR_1, retorno.getResultado());
 
-        // Caso: Manager nulo
+        
         retorno = sistema.registrarEquipo("Los Tigres", null);
         assertEquals(Retorno.Resultado.ERROR_1, retorno.getResultado());
     }
 
     @Test
-    void metodoNoImplementado() {  // TODO: ERRORES
-        // Caso: Simulación de metodo aún no implementado
+    void metodoNoImplementado() {  
+        
         retorno = sistema.registrarEquipo("Los Jaguares", "Luis Suarez");
         assertEquals(Retorno.Resultado.NO_IMPLEMENTADA, retorno.getResultado());
     }

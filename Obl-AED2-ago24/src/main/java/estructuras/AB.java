@@ -33,7 +33,7 @@ public class AB<T> {
         if (nodo == null)
             return 0;
         if (nodo.getIzq() == null && nodo.getDer() == null) {
-            // System.out.println(nodo.getDato());
+            
             return 1;
         }
         return cantHojasRec(nodo.getIzq()) + cantHojasRec(nodo.getDer());
@@ -79,7 +79,7 @@ public class AB<T> {
         } else {
             return pertenece(x, nodo.getIzq()) || pertenece(x, nodo.getDer());
         }
-        // return (nodo.getDato() == x) || pertenece(x, nodo.getIzq()) || pertenece(x, nodo.getDer());
+        
     }
 
 

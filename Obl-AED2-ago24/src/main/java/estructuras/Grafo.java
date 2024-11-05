@@ -5,11 +5,11 @@ import interfaz.ICola;
 import interfaz.ILista;
 
 public class Grafo {
-    private final Sucursal[] vertices;
-    private final Conexion[][] conexions;
-    private int cantVertices;
-    private final int maxVertices;
-    private final boolean dirigido;
+    protected Sucursal[] vertices;
+    protected Conexion[][] conexions;
+    protected int cantVertices;
+    protected int maxVertices;
+    protected boolean dirigido;
 
     public Grafo(int cantMaxVertices, boolean esDirigido) {
         cantVertices = 0;
@@ -158,7 +158,7 @@ public class Grafo {
         - Comparo el array de visitado de ambas ejecuciones de dfs, si hay diferencias devuelvo true,
             ya que el vertice vert es un punto crítico.
          */
-        int posSucursal = obtenerPos(vert); // Posición del vértice a verificar
+        int posSucursal = obtenerPos(vert); 
         int posPrimerVisitado = -1;
         boolean[] visitadosOriginales = new boolean[maxVertices];
         this.dfs(posSucursal, visitadosOriginales);
@@ -172,7 +172,7 @@ public class Grafo {
             return false;
         }
         boolean[] visitadosConExclusion = new boolean[maxVertices];
-        visitadosConExclusion[posSucursal] = true; // Excluir posSucursal
+        visitadosConExclusion[posSucursal] = true; 
         this.dfs(posPrimerVisitado, visitadosConExclusion);
         for (int i = 0; i < visitadosOriginales.length; i++) {
             if (visitadosOriginales[i] != visitadosConExclusion[i]) {
@@ -262,7 +262,7 @@ public class Grafo {
             return false;
         }
 
-        // aca es para ver si es en ambas direcciones
+        
         Conexion conexionActual = conexions[posOrigen][posDestino];
         Conexion conexionActualInvertida = conexions[posDestino][posOrigen];
 
@@ -307,10 +307,10 @@ public class Grafo {
                     if (conexions[pos][j].isExiste() && !visitados[j]) {
                         int distanciaNueva = costos[pos] + conexions[pos][j].getPeso();
                         if (distanciaNueva <= latenciaLimite && costos[j] > distanciaNueva) {
-                                vertices[j].setLatencia(distanciaNueva);
-                                sucursales.insertar(vertices[j]);
-                                costos[j] = distanciaNueva;
-                                vengo[j] = pos;
+                            vertices[j].setLatencia(distanciaNueva);
+                            sucursales.insertar(vertices[j]);
+                            costos[j] = distanciaNueva;
+                            vengo[j] = pos;
                         }
                     }
                 }

@@ -75,12 +75,12 @@ public class Lista<T> implements ILista<T> {
         }
     }
 
-//    public void imprimirDatosV2(NodoLista<T> nodo ) {
-//        if (nodo!=null){
-//            System.out.println(nodo.getDato());
-//            imprimirDatosV2(nodo.getSig());
-//        }
-//    }
+
+
+
+
+
+
 
     public Iterator<T> iterator() {
         return new Iterator<T>() {

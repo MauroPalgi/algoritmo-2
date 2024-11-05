@@ -209,7 +209,7 @@ public class ImplementacionSistema implements Sistema {
     public Retorno listarEquiposDescendente() {
         String result = listarEquiposDescendente(abbEquipos.getRaiz());
         if (result.isEmpty()) {
-            return Retorno.ok();
+            return Retorno.ok("");
         }
         return Retorno.ok(result.substring(0, result.length() - 1));
     }

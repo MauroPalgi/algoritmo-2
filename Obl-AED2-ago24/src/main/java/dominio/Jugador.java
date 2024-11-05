@@ -3,6 +3,7 @@ package dominio;
 import interfaz.Categoria;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 public class Jugador implements Comparable<Jugador> {
     private String alias;
@@ -70,7 +71,26 @@ public class Jugador implements Comparable<Jugador> {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Jugador jugador = (Jugador) obj;
+        return alias.equals(jugador.alias);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(alias);
+    }
+
+    @Override
     public int compareTo(Jugador otro) {
         return this.alias.compareTo(otro.alias);
     }
+
+
 }

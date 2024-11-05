@@ -54,6 +54,8 @@ public class Equipo implements Comparable<Equipo> {
 
 
     public Jugador buscarJugador(String alias){
+        System.out.println(alias);
+        abbIntegrantes.listarAscendente();
         return abbIntegrantes.buscar(new Jugador(alias));
     }
 }

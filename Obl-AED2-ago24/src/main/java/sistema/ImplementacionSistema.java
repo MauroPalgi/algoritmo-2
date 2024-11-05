@@ -41,12 +41,10 @@ public class ImplementacionSistema implements Sistema {
 
     private void reiniciarSistema() {
         grafoRegiones = null;
-
         abbJugadores = new ABB<>();
         abbJugadoresEstandares = new ABB<>();
         abbJugadoresPrincipiantes = new ABB<>();
         abbJugadoresProfesionales = new ABB<>();
-
         abbEquipos = new ABBEquipo();
     }
 
@@ -120,7 +118,7 @@ public class ImplementacionSistema implements Sistema {
 
         String result = inOrden(raiz);
         if (result.isEmpty()) {
-            return Retorno.ok();
+            return Retorno.ok("");
         }
         // Remove the last "|" character from the result string, if it exists
         return Retorno.ok(result.substring(0, Math.max(0, result.length() - 1)));
@@ -154,13 +152,14 @@ public class ImplementacionSistema implements Sistema {
 
     @Override
     public Retorno agregarJugadorAEquipo(String nombreEquipo, String aliasJugador) {
-        if (UTILS.esStringVacioONull(nombreEquipo) || UTILS.esStringVacioONull(aliasJugador)) {
+        if (nombreEquipo == null || nombreEquipo.isEmpty() || aliasJugador == null || aliasJugador.isEmpty()) {
             return Retorno.error1("ALGUN PARAMETRO ES NULL O VACIO");
         }
         Equipo equipoEncontrado = abbEquipos.buscar(new Equipo(nombreEquipo));
         if (equipoEncontrado == null) {
             return Retorno.error2("NO EXISTE EQUIPO CON NOMBRE " + nombreEquipo);
         }
+        System.out.println(equipoEncontrado.toString());
         Jugador jugadorEncontrado = abbJugadores.buscar(new Jugador(aliasJugador));
         if (jugadorEncontrado == null) {
             return Retorno.error3("NO EXISTE JUGADOR CON ALIAS " + aliasJugador);
@@ -169,6 +168,7 @@ public class ImplementacionSistema implements Sistema {
             return Retorno.error4("EL EQUIPO " + nombreEquipo + " YA TIENE 5 INTEGRANTES");
         }
         Jugador jugadorProfesional = abbJugadoresProfesionales.buscar(new Jugador(aliasJugador));
+        System.out.println("here");
         if (jugadorProfesional == null) {
             return Retorno.error5("EL JUGADOR NO ES PROFESIONAL");
         }
